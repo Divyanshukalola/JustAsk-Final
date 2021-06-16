@@ -1,0 +1,92 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+    
+ <br><br>
+<hr>
+    <section class="inner-page mt-0">
+      <div class="container mt-0" style="margin-bottom: 200px">
+
+        <center><h1>Transaction Successful!</h1><center>
+          <center><h5>Click Finish to complete the process</h5>
+            <p>Failing to click the Finish button might not complete the process of subscribing you for your selected plan. Please click the button below.</p>
+            <p>By clicking finish you agree to your <i>terms and conditions</i>.</p>
+          </center>
+<center>
+           <form action="/finish2" method="get">
+            <input type="text" class="form-control" name="question" id='question'  value="{{q.qid}}" hidden="True">
+            <div class="wiggle"><input type="submit" value="Finish" style="border-color: transparent; background-color: #1acc8d;color: white; font-size: 25px; margin-top: 3%; padding-right: 2%;padding-left: 2%;padding-top: 1%;padding-bottom: 1%;border-radius: 5px"></div>
+          
+        </form>
+          </center>
+
+      </div>
+    </section>
+
+    <style type="text/css">
+
+
+      
+
+      /*SHAKER*/
+@keyframes wiggle {
+  2% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  4% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  6% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  8% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  10% {
+    -webkit-transform: translateX(2px) rotate(1deg);
+    transform: translateX(2px) rotate(1deg);
+  }
+  12% {
+    -webkit-transform: translateX(-2px) rotate(-1deg);
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  14% {
+    -webkit-transform: translateX(2px) rotate(1deg);
+    transform: translateX(2px) rotate(1deg);
+  }
+  16% {
+    -webkit-transform: translateX(-2px) rotate(-1deg);
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  18% {
+    -webkit-transform: translateX(1px) rotate(0);
+    transform: translateX(1px) rotate(0);
+  }
+  20% {
+    -webkit-transform: translateX(-1px) rotate(0);
+    transform: translateX(-1px) rotate(0);
+  }
+}
+
+div.wiggle {
+  animation: wiggle 2.7s infinite;
+}
+
+div.wiggle:hover {
+  animation: none;
+}
+/*END SHAKER*/
+    </style>
+
+
+  </main><!-- End #main -->
+{% endblock %}

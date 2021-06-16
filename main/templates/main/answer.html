@@ -1,0 +1,663 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+
+
+  <main>
+
+    <style type="text/css">
+   @media print{
+   .noprint{
+       display:none;
+   }
+}
+</style>
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section id="QNA" class="breadcrumbs" class="noprint">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+           <form action="/search_request" method="get">
+            <div class="row"> 
+            <div class="col-sm-7">
+              <div class="input-group input-group-lg">
+              <input type="text" class="form-control mt-4" name="search" id='search' aria-label="Large" placeholder="Find Solutions" aria-describedby="inputGroup-sizing-sm" style="border-color: #1acc8d; border-width: 3px;width: 900px; border-radius: 5px">
+           
+              </div>
+            </div>
+
+            <div class="col-sm">
+            <div class="text-center text-lg-left">
+              
+                {% csrf_token %}
+                <input class="btn btn-get-started mt-4" type="submit" value="Search" style="border-radius: 5px;">
+            </div>
+            </div>
+
+            </div>
+             </form>
+
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+
+
+    <section class="breadcrumbs bg-white mb-0 mt-2" class="noprint">
+      <div class="container">
+
+        <div class="d-flex align-items-center">
+          <ol>
+            <li><button onclick="goBack()" style="background-color: transparent;border-color: transparent;color:#1acc8d;">Questions and Solution</button></li>
+            <li class="mt-1">{{questions.question|striptags|safe}}</li>
+          </ol>
+        </div>
+
+      </div>
+
+     
+    </section><!-- End Breadcrumbs Section -->
+<hr>
+    <section class="inner-page mt-0" class="noprint">
+      <div class="container mt-0" style="margin-bottom: 200px">
+
+        <!-- ======= Breadcrumbs Section ======= -->
+    
+
+
+        <div class="row">
+          <div class="col-sm-9  ">
+            <h2>Question</h2>
+           
+        <hr>
+        
+
+        {% if questions.question_cover.url != '' %}
+          <p>{{questions.question|safe}}</p>
+          <img class="questionimg" src="{{questions.question_cover.url}}" width="500">
+          {% if questions.question_cover2.url != '' %}
+            <img class="questionimg" src="{{questions.question_cover2.url}}" width="500">
+          {% endif %}
+           {% if questions.question_cover3.url != '' %}
+            <img class="questionimg" src="{{questions.question_cover3.url}}" width="500">
+          {% endif %}
+           {% if questions.question_cover4.url != '' %}
+            <img class="questionimg" src="{{questions.question_cover4.url}}" width="500">
+          {% endif %}
+           {% if questions.question_cover5.url != '' %}
+            <img class="questionimg" src="{{questions.question_cover5.url}}" width="500">
+          {% endif %}
+           {% if questions.question_cover6.url != '' %}
+            <img class="questionimg" src="{{questions.question_cover6.url}}" width="500">
+          {% endif %}
+           {% if questions.question_cover7.url != '' %}
+            <img class="questionimg" src="{{questions.question_cover7.url}}" width="500">
+          {% endif %}
+           {% if questions.question_cover8.url != '' %}
+            <img class="questionimg" src="{{questions.question_cover8.url}}" width="500">
+          {% endif %}
+
+
+        {% else %}
+        <div class="row">
+          <div class="col-12">
+             <p>{{questions.question|safe}}</p>
+          </div>
+          
+        </div>
+         
+        {% endif %}
+        <div class="link_ques_post" >
+          <br>
+        <br>
+        <a href="/question_p">Post your Question ..</a>
+        </div>
+        
+          </div>
+
+          <div class="col-sm">
+            <div class="card post_q" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title">Post your Questions</h5>
+                <h6 class="card-subtitle mb-2 text-muted" style="font-size: 11px">You question might aswell solve other's doubt. Do not hesitate to ask!</h6>
+                 <h6 class="card-subtitle mb-2 text-muted" style="font-size: 11px">If your question has images click <a href="/question_p">here</a>.</h6>
+                 <form action="/question_post/" method="get">
+                  {% csrf_token %}
+                 <textarea rows="6" type="text" class="form-control my-3" name="question" id="question" aria-label="Large" placeholder="Enter your Question" aria-describedby="inputGroup-sizing-sm"></textarea>
+                <input class="btn btn-get-started float-right" type="submit" value="Submit" style="border-radius: 5px; background-color: lightgrey; color: black; font-style: bold">
+             </form>
+
+                
+              </div>
+
+            </div>
+          </div>
+        </div>
+        
+    
+        <br>
+      <h3>Expert Solution: </h3>
+      <hr>
+      <br>
+      
+      <div class="row" class="noprint">
+        <div class="col-sm-0 col-0 ml-4">
+          <img class="rounded-circle" src="{{student.ProfilePicture.url}}" width="50">
+        </div>
+
+        <div class="col-sm-auto col-9 col-lg-11 mt-2">
+          <div class="row">
+
+        {% if student == "False" %}
+        {% else %}
+          <div class="col-10 col-sm-8 col-lg-6">
+               <p style="font-size: 15px; letter-spacing: 0px; word-spacing: 1px;line-height: 1px"> <span style="font-size: 12px">Answered by: </span>{{student.FirstName}} {{student.SecondName}}</p>
+          <p class="text-muted" style="font-size: 13px; color: grey"><span style="color: #007bff">{{count}}</span> Question Answered</p>
+            </div>
+
+              <div class="col-5 mr-0 col-sm-3 col-lg-2 mt-3 mr-0" style=" font-size: 12px">
+             Did this Answer Help?
+
+            </div>
+
+            <div class="col-9 ml-0 col-sm-8 col-lg-4 ">
+            
+          
+
+            {% if user.is_authenticated %}
+
+                    {% if liked == True %}
+                    <div class="row">
+                      <div class="col-3 mr-0">
+                        <form id="like" action="/like_question" method="get">
+                          {% csrf_token %}
+                          <input type="hidden" name="qid" value="{{questions.qid}}">
+
+
+                          <button style="background-color: transparent;border-color: transparent;"><div class="border p-1 m-2 px-2" style=" font-size: 12px; width: 60px" data-toggle="tooltip" data-placement="bottom" title="Glad that it helped!">
+                            <i class="icofont-thumbs-up" style="font-size: 20px;color: lightgrey"></i>
+                          {{questions.answer.likes}} 
+
+                          </div></button>
+
+                          </form>
+                      </div>
+
+                      <div class="col-5 ml-0">
+                        <a data-toggle="modal" data-target="#dislike"  style="background-color: transparent;border-color: transparent;"> <button style="background-color: transparent;border-color: transparent;"><div class="border p-1 m-2 px-2" style=" font-size: 12px;width: 60px" data-toggle="tooltip" data-placement="bottom" title="Sorry for your inconvenience!">
+                            <i class="icofont-thumbs-down" style="font-size: 20px; color: lightgrey"></i>
+                              <span>{{questions.answer.dislikes}} </span>
+                          </div></button></a>
+                      </div>
+                      
+
+
+                             
+                    </div>
+                         
+
+              
+                     {% else %}
+
+                        <button style="background-color: transparent;border-color: transparent;"><div class="border p-1 m-2 px-2" style=" font-size: 12px;width: 60px" data-toggle="tooltip" data-placement="bottom" title="Glad that it helped!">
+                  <i class="icofont-thumbs-up" style="font-size: 20px;color: lightgrey"></i>
+                {{questions.answer.likes}} 
+
+                </div></button>
+
+
+                <button style="background-color: transparent;border-color: transparent;"><div class="border p-1 m-2 px-2" style=" font-size: 12px;width: 60px" data-toggle="tooltip" data-placement="bottom" title="Sorry for your inconvenience!">
+                  <i class="icofont-thumbs-down" style="font-size: 20px; color: lightgrey"></i>
+                  {{questions.answer.dislikes}}
+                </div></button>
+
+
+                     {% endif %}
+
+
+
+              {% else %}
+                 <button style="background-color: transparent;border-color: transparent; padding: 0px" class="mr-0"><div class="border p-1 m-2 px-2" style=" font-size: 12px;width: 60px" data-toggle="tooltip" data-placement="bottom" title="Glad that it helped!">
+                  <i class="icofont-thumbs-up" style="font-size: 20px;color: lightgrey"></i>
+                {{questions.answer.likes}} 
+
+                </div></button>
+
+
+                <button style="background-color: transparent;border-color: transparent; padding: 0px" class="ml-0"><div class="border p-1 m-2 px-2" style=" font-size: 12px;width: 60px" data-toggle="tooltip" data-placement="bottom" title="Sorry for your inconvenience!">
+                  <i class="icofont-thumbs-down" style="font-size: 20px; color: lightgrey"></i>
+                  {{questions.answer.dislikes}} 
+                </div></button>
+              {% endif %}
+
+            
+
+           
+        {% endif %}
+
+
+
+        <!-- Modal -->
+
+          </div>
+  
+          
+            
+            
+          </div>
+
+          
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-sm mt-3 ml-4">
+          
+        {% if student == "False" %}
+         <h2 style="color: lightgrey">This Question is Not Answered yet</h2>
+         <br>
+            {% if User.subs %}
+
+
+
+             {% if User.expert == True %}
+              <a href="" data-toggle="modal" data-target="#exampleModal"> Found answer?</a>
+              {% else %}
+             
+              <h5 style="color: lightgrey">An Expert will answer this question soon</h5>
+              <br>
+              <h6 class="text-muted">Apply to be an expert! <a href="/expert_apply">Click here</a> for more information.</h6>
+              {% endif %}
+
+            {%else%}
+            <h5 style="color: lightgrey">An Expert will answer this question soon</h5>
+      
+
+            {% endif %}
+           
+        {% else %}
+
+            {% if user.is_authenticated %}
+
+
+                  {% if User.subs %}
+
+                                                                  {% if questions.answer.ans_file != '' %}
+                                                                  <div style="user-select:none;">
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file.url}}" width="400" onContextMenu="return false;" draggable="false">
+
+                                                                      {% if questions.answer.ans_file2 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file2.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+
+                                                                      {% if questions.answer.ans_file3 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file3.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      {% if questions.answer.ans_file4 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file4.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file5 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file5.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file6 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file6.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file7 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file7.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file8 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file8.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file9 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file9.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file10 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file10.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file11 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file11.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file12 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file12.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file13 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file13.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file14 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file14.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file15 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file15.url}}" width="800" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file16 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file16.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file17 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file17.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file18 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file18.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file19 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file19.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file20 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file20.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file21 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file21.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file22 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file22.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file23 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file23.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      {% if questions.answer.ans_file24 != '' %}
+                                                                      <img class="noprint questionimg" src="{{questions.answer.ans_file24.url}}" width="400" onContextMenu="return false;" draggable="false">
+                                                                      {% endif %}
+                                                                      
+                                                                      </div>
+                                                                    {% else %}
+                                                                     
+                                                                    {% endif %}
+
+                          <div class="noprint" style="user-select:none;overflow-wrap: break-word;"><p>{{questions.answer.answer|safe}} </p></div>
+                          <br>
+
+
+
+                          <p><button style="border-color: transparent;background-color: transparent;" onclick="myFunction()">Comment
+
+                          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-right-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                          </svg>
+                          </button></p>
+
+
+                          <div id='comment' style="display: none;">
+                             <h6>Comments:</h6>
+                            <hr>
+                            
+                            <br>
+                            {% for cm in comments%}
+                            <div class="row">
+                              <div class="col-sm-0 ml-5">
+                                <img class="rounded-circle" src="{{student.ProfilePicture.url}}" width="30">
+                              </div>
+                              <div class="col-sm">
+                                 <p style="font-size: 11px"><b>Commented by:  {{cm.student.FirstName}} {{cm.student.SecondName}}</b></p>
+                              <p>{{cm.text}}</p>
+                              </div>
+                            </div><hr>
+                           
+                            {% endfor %}
+                            <form method="post" action="/comment/">
+                              {% csrf_token %}
+                              <div class="form-group border p-4" >
+                                <label for="exampleFormControlTextarea1">Leave a comment</label>
+                                <input type="hidden" id="question"  name="question" value="{{questions.qid}}">
+                                <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Write your comment here...."></textarea>
+                                <br>
+                                <button type="submit" class="btn btn-secondary">Post Comment</button>
+                              </div>
+                            </form>
+
+
+                          </div>
+
+
+
+                  {% else %}
+                   <div data-aos="fade-right" data-aos-anchor="#example-anchor" data-aos-offset="500" data-aos-duration="500" class="alert alert-warning alert-dismissible fade show " style="position: absolute;z-index: 1;width: auto; height: auto; bottom: auto;border-color: transparent; background-color: #EAEDED ; opacity: 0.9;" role="alert">
+                  
+
+                  <div class="card" style="width: 20rem; background-color: transparent;border-color: transparent;">
+                    <div class="card-body">
+                      <h5 class="card-title" style="color: grey">Subscribe to View this Answer!</h5>
+                      
+                      <a href="/rates"><button type="button" class="btn btn-secondary px-4 py-2" style="font-size: 18px">Subscribe Now</button></a>
+                       
+                      
+                    </div>
+                  </div>
+
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true" style="color: black">&times;</span>
+                </button>
+              </div>
+                          <p style="color: transparent;text-shadow: 0 0 5px rgba(0,0,0,0.5);user-select: none;-webkit-user-select: none; -khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;">{{questions.answer|safe|truncatewords_html:5}} </p>
+                  {% endif %}
+            {% else %}
+
+
+
+               <div data-aos="fade-right" data-aos-anchor="#example-anchor" data-aos-offset="500" data-aos-duration="500" class="alert alert-warning alert-dismissible fade show " style="position: absolute;z-index: 1;width: auto; height: auto; bottom: auto;border-color: transparent; background-color: #EAEDED ; opacity: 0.9;" role="alert">
+                  
+
+                  <div class="card" style="width: 20rem; background-color: transparent;border-color: transparent;">
+                    <div class="card-body">
+                      <h5 class="card-title" style="color: grey">Login to View this Answer!</h5>
+                      <a href="/login"><button type="button" class="btn btn-secondary px-4 py-2" style="font-size: 18px">Login</button></a>
+                       
+                      
+                    </div>
+                  </div>
+
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true" style="color: black">&times;</span>
+                </button>
+              </div>
+            <p style="color: transparent;text-shadow: 0 0 5px rgba(0,0,0,0.5);user-select: none;-webkit-user-select: none; -khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;">{{questions.answer|safe|truncatewords_html:5}} </p>
+
+            {% endif %}
+
+            
+        {% endif %}
+        </div>
+      </div>
+     <hr>
+     <!-- <p><b>NOTE: </b>To become an expert fillout the form by clicking <a href="">here</a>. Once you are accepted as an expert you can post the answers.</p> -->
+      <br>
+      <br>
+
+
+
+
+
+
+
+
+
+{% if user.is_authenticated %}
+{% if User.subs %}
+ <h3>Questions Viewed by other Students </h3>
+      <hr>
+
+
+
+      {% for q in qs %}
+        <div class="row mb-0 mt-0">
+      
+        <div class="col-sm-0 ml-4 mt-3">
+          <p><strong>Q:</strong></p>
+        </div>
+        
+         <div class="col-sm-auto col-9 mt-3 col-lg-11">
+          <p><strong>{{q.question|safe|highlight:question|safe}}</strong></p>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-sm-0 ml-4">
+          <p><strong>A:</strong></p>
+        </div>
+
+         <div class="col-sm-auto col-9 col-lg-11">
+          <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="noprint">{{q.answer|truncatewords_html:5|safe}}</p>
+          <form action="/answer_request" method="get">
+            <input type="text" class="form-control" name="question" id='question'  value="{{q.qid}}" hidden="True">
+          <input type="submit" value="See Answer" style="border-color: transparent; background-color: transparent;color: #1acc8d">
+        </form>
+        </div>
+
+      </div>
+      <hr>
+
+      {% endfor %}
+
+      {% else %}
+{% endif %}
+      
+{% endif %}
+      
+
+      
+
+      </div>
+    </section>
+
+
+
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Solution to the Question!</h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <h9>The Answer will be varified</h9>
+        <hr>
+
+        <form action="/answer_post/" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+
+          <label for="files"><b>Answer:</b></label>
+           <input type="text"  class="form-control-file" id="qid" name="qid" value="{{questions.qid}}" hidden="True">
+
+         <textarea rows="6" type="text" class="form-control my-3" name="ans" id="ans" aria-label="Large" placeholder="Enter your Answer" aria-describedby="inputGroup-sizing-sm" value="Answer"></textarea>
+         <hr>
+
+         <label for="files"><b>Select files (Optional):</b></label>
+         <br>
+
+         <label for="files">file 1:</label>
+          <input type="file"  class="form-control-file" id="file1" name="file1" accept="image/*;capture=camera">
+          <label for="files">file 2:</label>
+          <input type="file"  class="form-control-file" id="file2" name="file2" accept="image/*;capture=camera">
+          <label for="files">file 3:</label>
+          <input type="file"  class="form-control-file" id="file3" name="file3" accept="image/*;capture=camera">
+          <label for="files">file 4:</label>
+          <input type="file"  class="form-control-file" id="file4" name="file4" accept="image/*;capture=camera">
+          <label for="files">file 5:</label>
+          <input type="file"  class="form-control-file" id="file5" name="file5" accept="image/*;capture=camera">
+          <label for="files">file 6:</label>
+          <input type="file"  class="form-control-file" id="file6" name="file6" accept="image/*;capture=camera">
+          <label for="files">file 7:</label>
+          <input type="file"  class="form-control-file" id="file7" name="file7" accept="image/*;capture=camera">
+          <label for="files">file 8:</label>
+          <input type="file"  class="form-control-file" id="file8" name="file8" accept="image/*;capture=camera">
+          <label for="files">file 9:</label>
+          <input type="file"  class="form-control-file" id="file9" name="file9" accept="image/*;capture=camera">
+          <label for="files">file 10:</label>
+          <input type="file"  class="form-control-file" id="file10" name="file10" accept="image/*;capture=camera">
+          <br>
+
+        <input class="btn btn-get-started float-left" type="submit" value="Submit" style="border-radius: 5px; background-color: lightgrey; color: black; font-style: bold">
+     </form>
+        
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" id="dislike" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Help us fix this. What's the issue?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="dislike" action="/dislike_question" method="get">
+                  {% csrf_token %}
+                  <input type="hidden" name="qid" value="{{questions.qid}}">
+                  <select class="form-control" id="reason" name="reason">
+                    <option>The Answer is incorrect</option>
+                    <option>The Answer is incomplete</option>
+                    <option>The Answer is spam/abuse</option>
+                    <option>other</option>
+                  </select>
+                   <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Additional details (optional)</label>
+                    <textarea class="form-control" id="Additional" name="Additional" rows="2"></textarea>
+                  </div>
+
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit"  class="btn btn-primary">Submit</button>
+        </form>
+     
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("comment");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+
+
+  </main><!-- End #main -->
+{% endblock %}

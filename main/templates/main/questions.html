@@ -1,0 +1,239 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+    <style type="text/css">
+      mark { 
+        padding: 0px;
+        margin: 0px;
+        margin-right: 0px;
+        background-color: #FED895;
+        color: black;
+        border-radius: 3px;
+      }
+    </style>
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section id="study" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+           <form action="/search_request" method="get">
+            <div class="row"> 
+            <div class="col-sm-7">
+              <div class="input-group input-group-lg">
+              <input type="text" class="form-control mt-4" name="search" id='search' aria-label="Large" placeholder="Find Solutions" aria-describedby="inputGroup-sizing-sm" value="{{question}}" style="border-color: #1acc8d; border-width: 3px;width: 900px; border-radius: 5px">
+           
+              </div>
+            </div>
+
+            <div class="col-sm">
+            <div class="text-center text-lg-left">
+              
+                {% csrf_token %}
+                <input class="btn btn-get-started mt-4" type="submit" value="Search" style="border-radius: 5px;">
+            </div>
+            </div>
+
+           
+          
+            </div>
+             </form>
+
+         
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+    <section class="inner-page">
+      <div class="container">
+        <h2>Your Question</h2>
+        <p>
+          {{question}}
+        </p>
+        <hr>
+      <h5>Questions and Solutions</h5>
+      <br>
+
+      {% for q in qs %}
+      <form action="/answer_request" target="_blank" method="get" id="myForm">
+
+      	<input type="text" class="form-control" name="question" id='question'  value="{{q.question|striptags}}" hidden="True">
+        <input type="text" class="form-control" name="question" id='question'  value="{{q.qid}}" hidden="True">
+
+      <div class="container shadow p-3 mb-5 bg-white rounded">  
+        <div class="row ml-4 mt-3">
+
+        <div class="col-sm-0 col-0 mt-3 ">
+          <p><strong>Q:</strong></p>
+        </div>
+        
+         <div class="col-sm-auto col-9 col-lg-11 mt-3 " style="width: auto">
+         	<a href="javascript:{}" onclick="document.getElementById('myForm').submit();" style="color: black">
+          {% with ques=q.question|striptags %}
+          {% with qu=question|striptags %}
+          <p><strong>{{ques|highlight:qu|truncatewords_html:70|safe}}</strong></p>
+          {% endwith %}
+          {% endwith %}
+          </a>
+        </div>
+    
+      </div>
+     
+      <div class="row mt-0 mb-5 ml-3 ">
+      	 {% if q.answer != '' %}
+        <div class="col-sm-0 col-0 ml-2">
+          <p><strong>A:</strong></p>
+        </div>
+        <div class="col-sm-auto col-lg-auto col-10">
+          <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> Answered</p>
+          <!-- <form action="/answer_request" target="_blank" method="get"> -->
+            
+          <input type="submit" value="See Full Solution" style="border-color: transparent; background-color: transparent;color: #1acc8d">
+        <!-- </form> -->
+        </div>
+        {% else %}
+        <div class="col-sm-0 col-0 ml-2">
+          <p><strong>A:</strong></p>
+        </div>
+
+         <div class="col-sm-auto col-lg-auto col-10">
+          <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> Not Answered</p>
+          <form action="/answer_request" target="_blank" method="get">
+            <input type="text" class="form-control" name="question" id='question'  value="{{q.question|striptags}}" hidden="True">
+            <input type="text" class="form-control" name="question" id='question'  value="{{q.qid}}" hidden="True">
+          <input type="submit" value="See Question" style="border-color: transparent; background-color: transparent;color: #1acc8d">
+        </form>
+        </div>
+
+        {% endif %}
+         
+      </div>
+      
+
+      </div>
+   
+        </form>
+      {% endfor %}
+
+
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {% if qs.has_previous == True %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ qs.previous_page_number }}&search={{question}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    {% else %}
+    {% endif %}
+
+    {% for num in qs.paginator.page_range %}
+      {% if qs.number == num %}
+      <li class="page-item active"><a class="page-link" href="?page={{ num }}&search={{question}}">{{num}}</a></li>
+      {% elif num > qs.number|add:'-3' and num < qs.number|add:'3' %}
+      <li class="page-item"><a class="page-link" href="?page={{ num }}&search={{question}}">{{num}}</a></li>
+      {% endif %}
+    {% endfor %}
+    
+  
+    {% if qs.has_next == True %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ qs.next_page_number }}&search={{question}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+    {% else %}
+    {% endif %}
+  </ul>
+</nav>
+<hr>
+ <h5>Related Notes</h5>
+
+
+
+
+
+<br>
+      <div class="row mb-5 justify-content-center">
+        <div class="card-deck justify-content-center">
+      {% for b in qs2 %}
+    <div class="col-4 col-sm-7 col-md-7 ml-5 mr-5 col-lg-3" >
+
+              <div class="card shadow p-3 mb-5 bg-white rounded"  style="width: 18rem;height: auto; display: inline-block">
+                <center>
+                   <div class="card-body ">
+                  <h5 class="card-title"><b>{{b.File_name|highlight:question|truncatewords_html:20|safe}}</b></h5>
+                  <hr>
+                  <p style="font-size: 14px">Author: {{b.Auth|highlight:question|safe}}</p>
+                  <p class="card-text" style="font-size: 15px">{{b.Description|highlight:question|truncatewords_html:15|safe}}</p>
+                  
+
+                  <form action="/noteview_request" method="get">
+                    <input type="text" class="form-control" name="notes" id="notes"  value="{{b.File}}" hidden="True">
+                  <input type="submit" value="Open Notes" style="border-color: transparent; background-color: transparent;color: #1acc8d">
+                </form>
+                  
+                </div>
+                </center>
+               
+              </div>
+            </div>
+      {% endfor %}
+    </div>
+    </div>
+
+
+
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {% if qs2.has_previous == True %}
+    <li class="page-item">
+      <a class="page-link" href="?page2={{ qs2.previous_page_number }}&search={{question}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    {% else %}
+    {% endif %}
+
+    {% for num in qs2.paginator.page_range %}
+      {% if qs2.number == num %}
+      <li class="page-item active"><a class="page-link" href="?page2={{ num }}&search={{question}}">{{num}}</a></li>
+      {% elif num > qs2.number|add:'-3' and num < qs2.number|add:'3' %}
+      <li class="page-item"><a class="page-link" href="?page2={{ num }}&search={{question}}">{{num}}</a></li>
+      {% endif %}
+    {% endfor %}
+    
+  
+    {% if qs2.has_next == True %}
+    <li class="page-item">
+      <a class="page-link" href="?page2={{ qs2.next_page_number }}&search={{question}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+    {% else %}
+    {% endif %}
+  </ul>
+</nav>
+
+
+      
+
+      </div>
+    </section>
+
+
+  </main><!-- End #main -->
+{% endblock %}

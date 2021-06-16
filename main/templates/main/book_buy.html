@@ -1,0 +1,427 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section id="books" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+           <form action="/booksearch_request" method="get">
+            <div class="row"> 
+            <div class="col-sm-7">
+              <div class="input-group input-group-lg ">
+              <input type="text" class="form-control mt-4" name="search" id='search' aria-label="Large" placeholder="Search By ISBN, Title or Author's Name" aria-describedby="inputGroup-sizing-sm" style="border-color: #1acc8d; border-width: 3px;width: 900px; border-radius: 5px">
+           
+              </div>
+            </div>
+
+            <div class="col-sm">
+            <div class="text-center text-lg-left">
+              
+                {% csrf_token %}
+                <input class="btn btn-get-started mt-4" type="submit" value="Search" style="border-radius: 5px;">
+            </div>
+            </div>
+
+            </div>
+             </form>
+
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+
+
+    <section class="breadcrumbs bg-white mb-0 mt-2">
+      <div class="container">
+
+        <div class="d-flex align-items-center">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>{{book.File_name}}</li>
+          </ol>
+        </div>
+
+      </div>
+
+     
+    </section><!-- End Breadcrumbs Section -->
+    <hr>
+
+    <section class="inner-page mt-0">
+      <div class="container mt-0" style="margin-bottom: 200px">
+
+         <div class="row justify-content-center">
+          <div class="col-7 col-lg-12 col-md-12">
+            <h2>{{book.File_name}} | <span style="color: grey; font-size: 20px">{{book.Edition}}</span></h2>
+            <h5>ISBN: {{book.BID}} - {{book.Edition}}</h5>
+
+        
+            </div>
+          </div>
+          <hr>
+          <div class="row mt-5 justify-content-center"> 
+            <div class="col-7 col-md-12 col-lg-4 mt-4">
+              <img src="{{book.Bcover.url}}" width="250" style="border-radius: 5px">
+              <p class="mt-5" style="color: black"><b>ISBN:</b> {{book.BID}}</p>
+              <p style="color: black"><b>Author:</b> {{book.Auth}}</p>
+            </div>
+
+            {% if book.price != 0 %}
+            <div class="col-8 col-sm-7 col-md-6 col-lg-4 mt-4 ">
+              <div class="card" style="width: 20rem;">
+                <div class="card-body">
+                   <div class="row ">
+                          <div class="col-sm-6">
+                            <h5 class="card-title"><b>Rent</b></h5>
+                          </div>
+                          <div class="col-sm">
+                            <h5 class="card-title"><b>-/{{book.price}} USD</b></h5>
+                          </div>
+                      </div>
+
+                 <p style="font-size: 15px; color: grey">Due after 4 mounths from purchase</p>
+                      <hr>
+                      <p style="font-size: 15px"><b>Included With your Book</b> </p>
+                      <p style="font-size: 13px"><i class="icofont-check"></i> Text book Solved Solutions</p>
+                      <p style="font-size: 13px"><i class="icofont-check"></i> Two Step Easy Rewneal</p>
+                      <p style="font-size: 13px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gift-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3z"/>
+  <path d="M15 7v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7h6zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9H2.5z"/>
+</svg> Special Price from Just Ask</p>
+
+
+
+                    <p style="font-size: 12px; color: grey">List Price: <s>{{book.price|add:6}} USD</s></p>
+                    <p style="font-size: 18px; color: orange"><b>Special Price*: {{book.price}} USD</b></p>
+
+                    <a href="" data-toggle="modal" data-target="#pay"><button type="button" class="btn btn-get-started mb-4">Rent Now</button></a>
+
+                  
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-8  col-sm-7 col-md-auto col-lg-4 mt-4">
+              <div class="card" style="width: 20rem;">
+                <div class="card-body">
+                   <div class="row">
+                          <div class="col-sm-6">
+                            <h5 class="card-title"><b>Buy</b></h5>
+                          </div>
+                          <div class="col-sm">
+                            <h5 class="card-title"><b>-/{{book.price2}} USD</b></h5>
+                          </div>
+                      </div>
+
+                 <p style="font-size: 15px; color: grey">Yours to Keep</p>
+                      <hr>
+                      <p style="font-size: 15px"><b>Included With your Book</b> </p>
+                      <p style="font-size: 13px"><i class="icofont-check"></i> Text book Solved Solutions</p>
+                      <p style="font-size: 13px"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gift-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3z"/>
+  <path d="M15 7v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7h6zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9H2.5z"/>
+</svg> Special Price from Just Ask</p>
+
+
+                    <p style="font-size: 12px; color: grey">List Price: <s>{{book.price2|add:6}} USD</s></p>
+                    <p style="font-size: 18px; color: orange"><b>Special Price*: {{book.price2}} USD</b></p>
+                   <a href="" data-toggle="modal" data-target="#pay1"><button type="button" class="btn btn-get-started mb-4">Get Access</button></a>
+
+                  
+                </div>
+              </div>
+
+            </div>
+
+            {%else%}
+
+              <div class="col-8 col-sm-7 col-md-6 col-lg-8 mt-4 ">
+              <div class="card" style="width: 20rem;">
+                <div class="card-body">
+                   <div class="row ">
+                          <div class="col-sm-6">
+                            <h5 class="card-title"><b>View Book</b></h5>
+                          </div>
+                         
+                      </div>
+
+                 <p style="font-size: 15px; color: grey">This book is free to use!</p>
+                      <hr>
+                      <p style="font-size: 15px"><b>Included With your Book</b> </p>
+                      <p style="font-size: 13px"><i class="icofont-check"></i>High quality scan</p>
+                      <p style="font-size: 13px"><i class="icofont-check"></i>Text book solved solutions if available</p>
+                    
+                    <form action="/bookview_request" method="get">
+                      <input type="text" class="form-control" name="bid" id="bid"  value="{{book.BID}}" hidden="True">
+                    <input type="submit" class="btn btn-get-started" value="Open Book">
+                  </form>
+
+                  
+                </div>
+              </div>
+
+            </div>
+
+            {%endif%}
+            
+
+
+
+
+
+
+
+
+
+          </div>
+          <p class="mt-5" style="font-size: 11px"><b>Note:</b> Just Ask does not guarantee any supplemental material with textbooks (e.g. CDs, DVDs, access codes, or lab manuals).</p>
+          <hr>
+          
+
+          <h5><b>Book Description</b></h5>
+         
+          <p>{{book.Description|safe}}</p>
+          <hr>
+
+
+
+         <h2 data-aos="fade-up" class="mt-5 mb-5" style="text-align: center;font-weight:normal">Your books are equiped with following amenities!</h2>
+
+            <div class="row mt-5 justify-content-center" data-aos="fade-up">
+                <div class="col-7 col-md-5 col-sm-7 mt-5 col-lg-4">
+                    <div class="card" style="width: 18rem; border-color: transparent;">
+                      <div class="card-body">
+                        <img src="{% static 'assets/img/palm-scan.gif' %}" width="100px" style="margin-left:30%; margin-bottom: 20%">
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal;text-align: center">High Quality Scans</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">Converted hardcopy version of the book will have best possible scan quality</p>
+                       
+                      </div>
+                    </div>
+                </div>
+                <div class="col-7 col-md-5 col-sm-7 mt-5 col-lg-4">
+                    <div class="card" style="width: 18rem;border-color: transparent;">
+                      <div class="card-body">
+                        <img src="{% static 'assets/img/checklist.gif' %}" width="100px" style="margin-left:30%; margin-bottom: 20%">
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal; text-align: center">Checked thoroughly!</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">Books are checked multiple times before getting to you for any missing sections.</p>
+                       
+                      </div>
+                    </div>
+                </div>
+                <div class="col-7 col-md-5 col-sm-7 mt-5 col-lg-4">
+                    <div class="card" style="width: 18rem;border-color: transparent;">
+                      <div class="card-body">
+                        <img src="{% static 'assets/img/create-order.gif' %}" width="100px" style="margin-left:30%; margin-bottom: 20%">
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal; text-align: center">Save Upto 80% on your orders</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">Spend less on your books and pay more attention to your semesters.</p>
+                        
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <hr data-aos="fade-up">
+
+            <h2 data-aos="fade-up"  class="mt-5 mb-5" style="text-align: center;font-weight:normal">Common FAQ regarding Book Renting!</h2>
+
+            <div class="row mt-5 justify-content-center" data-aos="fade-up">
+                <div class="col-7 mt-5 col-sm-7 col-md-5 col-lg-4">
+                    <div class="card" style="width: 18rem; border-color: transparent;">
+                      <div class="card-body">
+                        
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal;text-align: center">Do I have to subscribe to view EBooks?</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">Yess you have to subscribe to view EBooks. Try our 4 months Free Plan. </p>
+                        <center><a href="/rates">Subscribe</a></center>
+                       
+                      </div>
+                    </div>
+                </div>
+                <div class="col-7 mt-5 col-sm-7 col-md-5 col-lg-4">
+                    <div class="card" style="width: 18rem;border-color: transparent;">
+                      <div class="card-body">
+                        
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal; text-align: center">Do I get a Hardcopy or an Ebook if I order from Just Ask?</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">Just Ask only provides Ebook Renting services for now.</p>
+                       
+                      </div>
+                    </div>
+                </div>
+                <div class="col-7 mt-5 col-sm-7 col-md-5 col-lg-4">
+                    <div class="card" style="width: 18rem;border-color: transparent;">
+                      <div class="card-body">
+                        
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal; text-align: center">What do I do if I want to keep the book for a long time?</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">You can always extend your rental time. With two easy steps you can extend your purchase.</p>
+                        
+                      </div>
+                    </div>
+                </div>
+            </div>
+      
+
+
+
+
+       
+          
+          </div>
+
+
+
+
+
+
+
+<div class="modal fade" id="pay" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Payment Options!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+       
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+   <h5>We are not accepting any payments right now!</h5>
+          <p>If you are here for the frist time please try our 1 month free trial and view books that are free to access. We apologies for your inconvinience.</p>
+        <!-- <div id="paypal-button-container"></div> -->
+
+        
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="pay1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Payment Options!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<h5>We are not accepting any payments right now!</h5>
+          <p>If you are here for the frist time please try our 1 month free trial and view books that are free to access. We apologies for your inconvinience.</p>
+        <!-- <div id="paypal-button-container1"></div> -->
+
+        
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<form style="display: none" action="/payment" method="get" id="form">
+  <input type="hidden" id="book" name="book" value="{{book.BID}}"/>
+</form>
+
+<form style="display: none" action="/payment_buy" method="get" id="form2">
+  <input type="hidden" id="book" name="book" value="{{book.BID}}"/>
+</form>
+
+
+
+<script src="https://www.paypal.com/sdk/js?client-id=AWC4j2A_9N9WJnXzb5rA3cWdoLfOkqvpevXaA9jUZI3GTWS97uO7824ORk0s2tLQxu8ahVUCBCeLN3FO&currency=USD"></script>
+
+    <script>
+        // Render the PayPal button into #paypal-button-container
+        function completeOrder(){
+          $("#form").submit();
+        }
+
+
+        paypal.Buttons({
+          style: {
+                color:  'blue',
+                shape:  'pill',
+                label:  'pay',
+                height: 40
+            },
+
+
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '{{book.price}}'
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Show a success message to the buyer
+                    $("#form").submit();
+                });
+            }
+
+
+        }).render('#paypal-button-container');
+    </script>
+
+
+    <script>
+        // Render the PayPal button into #paypal-button-container
+
+
+        function completeOrder1(){
+         $("#form2").submit();
+        }
+
+        paypal.Buttons({
+          style: {
+                color:  'blue',
+                shape:  'pill',
+                label:  'pay',
+                height: 40
+            },
+
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '{{book.price2}}'
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Show a success message to the buyer
+                    $("#form2").submit();
+                });
+            }
+
+
+        }).render('#paypal-button-container1');
+    </script>
+
+
+</section></main>
+      
+{% endblock %}

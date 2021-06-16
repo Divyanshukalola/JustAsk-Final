@@ -1,0 +1,232 @@
+{% extends "main/header.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+
+
+<main>
+
+<!-- ======= Breadcrumbs Section ======= -->
+    <section id="support" class="breadcrumbs bg-white">
+      <div class="container">
+
+    {% if messages%}
+    
+      <div data-aos="fade-right" data-aos-anchor="#example-anchor"
+     data-aos-offset="500"
+     data-aos-duration="500" class="alert alert-warning alert-dismissible fade show " style="position: absolute;z-index: 1;width: auto; height: auto; top: auto;border-color: transparent; background-color: #D6EAF8" role="alert">
+        <strong style="color: black;">Alert! </strong> 
+        {% for m in messages %}
+        <br><span style="color: grey">{{m}}</span>
+        {% endfor%}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" style="color: black">&times;</span>
+        </button>
+      </div>
+    
+  {% endif%}
+
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+    <center>
+       <div class="container">
+       <h1>Customer Service</h1>
+      <hr>
+    </div>
+    </center>
+    
+
+    <!-- ======= F.A.Q Section ======= -->
+    <section id="faq" class="faq section-bg bg-white">
+      <div class="container bg-white">
+
+        <h2>F.A.Q</h2>
+          <p>Frequently Asked Questions</p>
+          <hr>
+
+        <div class="faq-list">
+          <ul>
+            <li data-aos="fade-up">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" class="collapse" href="#faq-list-1">How do I cancel my subscription plan. <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-1" class="collapse show" data-parent=".faq-list">
+                <p>
+                  You can cancel your subscription plan by going to your profile and clicking your username in the navigation panel or you can email us on support@just-ask.in for canceling the plan and we will revert back within 24 hours from delivery (Your email should include your Student ID that Just Ask provided you with your full name). Once you decide to cancel the subscription plan please consider this that you cannot go back you have to subscribe again in order to use our services. 
+                </p>
+              </div>
+            </li>
+           
+
+            <li data-aos="fade-up" data-aos-delay="100">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-2" class="collapsed">Where are my E-books? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-2" class="collapse" data-parent=".faq-list">
+                <p>
+                  Once you have purchased an E-book the book will be visible under your collection. Click books from the navigation panel and you will see your collection or you can go to your profile by clicking your username from the navigation panel to view the same.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="200">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-3" class="collapsed">How to access book solutions? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-3" class="collapse" data-parent=".faq-list">
+                <p>
+                  If a book is equiped with a solution than it will be visible under the book that you are viewing. This option depends whether the book has a solutions attached to it.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="300">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-4" class="collapsed">How do I contact Just Ask? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-4" class="collapse" data-parent=".faq-list">
+                <p>
+                  You can fill out the form below or you can email us on support@just-ask.in. Please read our terms and conditions before emailing us. Please refrain yourself from using sensitive language.
+                </p>
+              </div>
+            </li>
+             <li data-aos="fade-up"  data-aos-delay="400">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" class="collapsed" href="#faq-list-5">What do I gain from contributing my notes?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-5" class="collapse" data-parent=".faq-list">
+                <p>
+                  Just Ask do not pay the contributors for uploading their notes to Just Ask but the notes that are uploaded will be displayed under the contributor's name. All though special credits are given to the contributor if he/she decides to upload their resources. 
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="500">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-6" class="collapsed">Will I be charged for using grammer check from Just Ask? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-6" class="collapse" data-parent=".faq-list">
+                <p>
+                  Checking your grammer is a free service from Just Ask. You do not have to pay for using this service. 
+                </p>
+              </div>
+            </li>
+
+
+             <li data-aos="fade-up" data-aos-delay="600">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-7" class="collapsed">How do I earn credits? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-7" class="collapse" data-parent=".faq-list">
+                <p>
+                  Credits are earned by either subscribing to JustAsk, contributing notes or they can also be earned by posting and answering a question. You will only earn credits on posting a question if that question is answered. The person who answers the question also earns credits as well as the person who posts it.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="700">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-8" class="collapsed">What will happen if I have 2000 credits? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-8" class="collapse" data-parent=".faq-list">
+                <p>
+                  Once you reach the limit of credits which is 2000 you cannot earn more than the limit. You have to redeem your credits in order to continue earning from the questions that you post.
+                </p>
+              </div>
+            </li>
+
+             <li data-aos="fade-up" data-aos-delay="800">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-9" class="collapsed">Can I redeem credits if I have not subscribed? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-9" class="collapse" data-parent=".faq-list">
+                <p>
+                  You cannot redeem credits if your subscription is ended. You have to subscribe in order to use your credits.
+                </p>
+              </div>
+            </li>
+
+
+
+             <li data-aos="fade-up" data-aos-delay="900">
+              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-10" class="collapsed">How to change the Music Playlist? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-10" class="collapse" data-parent=".faq-list">
+                <p>
+                  Go to your profile and click on "PlayList" and copy past the Spotify PlayList that you want to add.
+                </p>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+      </div>
+    </section><!-- End F.A.Q Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-right">
+
+         <h2>Contact</h2>
+          <p>Contact Us</p>
+          <hr>
+          <center>
+          
+            
+              <div class="col-lg-4" data-aos="fade-right">
+                 <img src="https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=BEGIN:VCARD%0d%0aVERSION:2.1%0d%0aN:Just;Ask%0d%0aFN:Just%20Ask - support%0d%0aTITLE:Just%20Ask%0d%0aEMAIL:support@just-ask.in%0d%0aEND:VCARD" />
+          <p style="color: grey">Add "Just Ask" to your contact list by <strong style="font-size: 20px">scanning me!</strong> </p>
+        <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="How to scan a QR code!" data-content="Open the Camera app from the Home screen and wait for the Camera to detect your QR code.">How ?</a>
+              </div>
+              
+         
+                     
+         
+          </center>
+ 
+          <hr>
+          <br>
+
+        <div class="row">
+
+          <div class="col-lg-4" data-aos="fade-right" data-aos-delay="100">
+            <div class="info">
+              <div class="address">
+                <i class="icofont-google-map"></i>
+                <h4>Location:</h4>
+                <p>India</p>
+              </div>
+
+              <div class="email">
+                <i class="icofont-envelope"></i>
+                <h4>Email:</h4>
+                <p>support@just-ask.in</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+
+            <form action="/inquire/" method="post" class="email-form">
+               {% csrf_token %}
+              <div class="form-row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                  <div class="validate"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" name="message" id="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                
+              </div>
+             
+               <input class="btn btn-get-started float-right" type="submit" value="Send Message" style="border-radius: 5px; background-color: lightgrey; color: black; font-style: bold">
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+
+
+
+ </main>
+{% endblock content %}
+
+

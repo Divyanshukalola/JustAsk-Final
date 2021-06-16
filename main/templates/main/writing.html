@@ -1,0 +1,292 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+     <style>
+  /* Popover */
+  .popover {
+    border: 2px dotted green;
+    max-width: 200px;
+    
+
+  }
+
+  #error{
+    cursor:pointer; 
+    border: 2px dotted red;
+    animation-delay: 5s;
+    animation: border_R 5s infinite;
+    position: relative;
+    
+    box-shadow: 2px 2px 2px grey;
+    font-size: 17px;
+    opacity: 0.4;
+  }
+
+
+  @keyframes border_R {
+  0%   {opacity: 0.4;
+        
+  }
+
+  5%  {opacity: 1;
+        
+  }
+  95%  {opacity: 1;
+       
+  }
+  100% {opacity: 0.4;
+       
+  }
+}
+  /* Popover Header */
+  .popover-title {
+    background-color: #73AD21; 
+    color: #FFFFFF; 
+    font-size: 28px;
+    text-align:center;
+  }
+  /* Popover Body */
+  .popover-content {
+    font-size: 28px;
+    background-color: coral;
+    color: #FFFFFF;
+    padding: 25px;
+  }
+  /* Popover Arrow */
+  .arrow {
+    border-right-color: green !important;
+  }
+  </style>
+    <!-- ======= Breadcrumbs Section ======= -->
+  <br><br>
+
+
+    <section  id="writing" class="breadcrumbs bg-white mb-0 mt-5">
+      <div class="container">
+
+        <div class="d-flex align-items-center">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>Writing</li>
+          </ol>
+        </div>
+
+      </div>
+
+     
+    </section><!-- End Breadcrumbs Section -->
+<hr>
+    <section id="writing" class="inner-page mt-0">
+      <div class="container mt-0" style="margin-bottom: 200px">
+        <h1>Check Your Grammar With Just Ask!</h1>
+        <hr>
+
+        <div>
+          <h7 class='text-muted'>You can check whatever you want and improve upon your mistakes. Please refrain your self from using sensitive language.</h7>
+
+           <form action="/writing/" method="POST">
+                  {% csrf_token %}
+
+                  {% if text == None %}
+                   <textarea disabled="true" data-gramm="false" rows="10" type="text" class="form-control my-3" name="question" id="question" aria-label="Large" placeholder="Enter your text here.." aria-describedby="inputGroup-sizing-sm"></textarea>
+                   {% else %}
+                    <textarea disabled="true" data-gramm="false" rows="10" type="text" class="form-control my-3" name="question" id="question" aria-label="Large" placeholder="Enter your text here.." value="{{text}}" aria-describedby="inputGroup-sizing-sm">{{text}}</textarea>
+                  {% endif %}
+
+                  <span class="float-left" id="wordCount"></span>
+                  <br>
+                  <br>
+                  <input class="btn btn-get-started float-right ml-5" type="submit" id="myBtn" value="Submit" style="border-radius: 5px; background-color: lightgrey; color: black; font-style: bold">
+                
+                   <span style="font-size: 11px">You will <b>not</b> be charged for using this feature. We might record your submissions to improve our algorithms. Please submit your text only if you agree with our terms.</span>
+                
+             </form>
+        </div>
+        <br>
+        <hr>
+        
+
+          
+       
+        {% if edits == '' %}
+
+          <h5 style="color: lightgrey; text-align: center">We will let you know your suggested changes here.</h5>
+          <br><br>
+        {% else %}
+        <div class="container" id="edits">
+        <h5>Edited text:</h5>
+        <p style="font-size: 17px;line-height: 200%;">{{edittedT|safe}}</p>
+        </div>
+          
+        <hr>
+
+        <div >
+          
+          {% for e in edits %}
+
+          {% if e.orignal != False %}
+
+
+            <div id="{{e.suggestion}}" data-aos="fade-up" data-aos-delay="{{forloop.counter0}}00" class="container border shadow p-3 mb-5 bg-white rounded">
+              <section id="faq" class="faq section-bg bg-white"  style="height: auto;margin-top: 0px; padding-top: 0px;margin-bottom: 0px; padding-bottom: 0px;">
+              <div class="faq-list" style="margin-top: 0px; padding-top: 0px;">
+                <a data-toggle="collapse" href="#faq-list-{{forloop.counter0}}" class="collapsed"> <center>
+                 <p class="mt-3 mb-3" style="color: grey"><b>Suggestion {{forloop.counter0}} : </b> "{{e.suggestion|highlightBG:e.correct}}" <i style="height: 100px" class="bx bx-chevron-down icon-show"></i><i style="height: 100px" class="bx bx-chevron-up icon-close"></i></p></center> </a>
+
+                  <div style="color: grey" id="faq-list-{{forloop.counter0}}" class="collapse" data-parent=".faq-list">
+                    <hr>
+                <div class="row">
+                  <div class="col-3 col-lg-2  ml-5 ">
+                    <p><b>Orignal Sentence:</b></p>
+                  </div>
+                  <div class="col-7 col-lg-9">
+                    <p> <span>{{e.orignal|highlightBR:e.error}}</span> </p>
+                  </div>
+                </div>
+                <hr>
+
+                <div class="row">
+                  <div class="col-3 col-lg-2  ml-5 ">
+                    <p><b>Edit:</b></p>
+                  </div>
+                  <div class="col-7 col-lg-9">
+                    <p><span>{{e.suggestion|highlightBG:e.correct}}</span></p>
+                  </div>
+                </div>
+
+                {% if e.definition != None %}
+                
+                <hr>
+                <div class="row">
+                  <div class="col-3 col-lg-2  ml-5 ">
+                    <p class="mb-3"><b>Definition:</b></p>
+                  </div>
+                  <div class="col-7 col-lg-9">
+                    <p><span>{{e.definition}}</span></p>
+                  </div>
+                </div>
+                {% else %}
+                <br>
+                {% endif %}
+
+
+                  </div>
+                  
+              </div>
+              </section>
+
+              
+                
+            </div>
+
+            {% else %}
+
+            {% endif %}
+        {% endfor %}
+
+
+        </div>
+
+        
+             
+
+        {% endif %}
+        <hr>
+        <p style="font-size: 11px"><b>NOTE: </b>The method that we are using to check your grammer is <b>NOT</b> 100% accurate. Our algorithms only gives you possible suggestions. If you feel our suggestion is wrong please do not use those suggestions in any of your submissions. We appreciate your understanding.</p>
+
+       <style>
+.vl {
+  border-left: 1px solid lightgrey;
+  height: 100%;
+
+}
+</style>
+<script type="text/javascript">
+	function count_word( val ){
+    var wom = val.match(/\S+/g);
+    return {
+        words : wom ? wom.length : 0
+    };
+}
+
+
+var textContent = document.getElementById("question");
+var showWordCount   = document.getElementById("wordCount");
+
+textContent.addEventListener("input", function(){
+  var v = count_word( this.value );
+  showWordCount.innerHTML = (
+      "Word Count: <b>"+ v.words +"</b>"
+  );
+}, false);
+
+
+</script>
+<style type="text/css">
+  li{
+    padding: 1px;
+  }
+</style>
+
+{% for e in edits %}
+<script type="text/javascript">
+  text =  "<span data-toggle='collapse' href='#faq-list-{{forloop.counter0}}' class='collapsed'><a id='error' data-toggle='popover1' data-offset='550px' title='{{e.correct}}' data-html='true' data-content='<b>Edit:</b> {{e.suggestion}}'><del style='background-color:#FFA4A4;color=#FFFFFF;border-radius:3px; padding-left:5px;padding-right:5px;'>{{e.error}}</del> | <span style='background-color:#ABEBC6;color=#FFFFFF;border-radius:3px; padding-right:5px;padding-left:5px;'>{{e.correct}}</span></a></span>";
+
+  document.getElementById("{{e.error}}").innerHTML = text;
+
+  var elmnt = document.getElementById("edits");
+  elmnt.scrollIntoView();
+
+
+
+
+    /*  */
+</script>
+{% endfor %}
+
+
+
+
+
+
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="popover1"]').popover(); 
+  $('[data-toggle="popover1"]').popover({animation: true,html: true});
+   
+});
+
+
+
+$(document).ready(function(){
+  document.getElementById("question").disabled = false;
+});
+
+
+
+
+
+
+</script>
+
+
+           
+           
+
+      
+
+      </div>
+    </section>
+
+
+  
+
+
+  </main><!-- End #main -->
+{% endblock %}

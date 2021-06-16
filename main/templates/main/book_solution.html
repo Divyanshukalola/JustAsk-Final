@@ -1,0 +1,391 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section id="books" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+           <form action="/booksearch_request" method="get">
+            <div class="row"> 
+            <div class="col-sm-7">
+              <div class="input-group input-group-lg">
+              <input type="text" class="form-control mt-4" name="search" id='search' aria-label="Large" placeholder="Search By ISBN, Title or Author's Name" aria-describedby="inputGroup-sizing-sm" style="border-color: #1acc8d; border-width: 3px;width: 900px; border-radius: 5px">
+           
+              </div>
+            </div>
+
+            <div class="col-sm">
+            <div class="text-center text-lg-left">
+              
+                {% csrf_token %}
+                <input class="btn btn-get-started mt-4" type="submit" value="Search" style="border-radius: 5px;">
+            </div>
+            </div>
+
+            </div>
+             </form>
+
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+
+
+    <section class="breadcrumbs bg-white mb-0 mt-2">
+      <div class="container">
+
+        <div class="d-flex align-items-center">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>{{book.File_name}}</li>
+          </ol>
+        </div>
+
+      </div>
+
+     
+    </section><!-- End Breadcrumbs Section -->
+    <hr>
+
+    <section class="inner-page mt-0">
+      <div class="container mt-0" style="margin-bottom: 200px">
+
+
+         <div class="row">
+          <div class="col-sm-9  ">
+            <h2>{{book.File_name}} | <span style="color: grey; font-size: 20px">{{book.Edition}}</span></h2>
+            <h5>Author: {{book.Auth}} - {{book.Edition}}</h5>
+
+        
+            </div>
+          </div>
+          <hr>
+
+
+
+
+
+          <div id="navigation_controls" style="background-color: #333">
+        <div class="row">
+          
+          
+
+            <div class="col-sm-1 ml-3 mt-3">
+              <button class="btn btn-outline-secondary" id="go_previous" style="color: white; border-color: white">Previous</button>
+            </div>
+            <div class="col-sm-1  mt-3">
+              <button class="btn btn-outline-secondary" id="go_next" style="color: white; border-color: white">Next</button>
+            </div>
+            <div class="col-sm-2 mt-3">
+              <div id="zoom_controls">  
+                <button class="btn btn-secondary px-4 py-1" id="zoom_in" style="background-color: lightgrey; color: black; font-size: 20px"><b>+</b></button>
+                <button class="btn btn-secondary px-4 py-1" id="zoom_out" style="background-color: lightgrey;color: black;font-size: 20px"><b>-</b></button>
+              </div>
+            </div>
+           
+            <div class="col-sm-3  mt-3">
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="background-color: lightgrey">Page Number</span>
+                </div>
+                <input type="number" id="current_page" value="1" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+               
+              </div>
+
+
+
+            </div>
+             <div class="col-sm-3  mt-3">
+
+              <p id="p1" style="color: white; font-size: 20px;"></p>
+
+            </div>
+
+          
+        </div>
+    
+</div>
+
+
+
+<div id="my_pdf_viewer">
+     
+</div>
+
+<div class="row">
+  <div class="container">
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="color: black">×</a>
+      <a id="demo" href="#" style="color: black"></a>
+
+
+      
+    </div>
+  </div>
+  <div class="col-sm">
+    
+       <div id="canvas_container" style="border-color: transparent; height: 700px; width: auto" >
+          <canvas id="pdf_renderer">
+          </canvas>
+      </div>
+    
+   
+  </div>
+</div>
+
+<script>
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js">
+</script>
+<script>
+
+
+
+
+
+    var myState = {
+        pdf: null,
+        currentPage: 1,
+        zoom: 1
+    }
+ 
+    // more code here
+
+    pdfjsLib.getDocument('{{book.File.url}}').then((pdf) => {
+ 
+    myState.pdf = pdf;
+    render();
+ 
+});
+
+
+
+  function render() {
+    myState.pdf.getPage(myState.currentPage).then((page) => {
+ 
+        // more code here
+        var canvas = document.getElementById("pdf_renderer");
+    var ctx = canvas.getContext('2d');
+     
+    var viewport = page.getViewport(myState.zoom);
+
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+
+
+    page.render({
+        canvasContext: ctx,
+        viewport: viewport
+    });
+
+
+var str1 = "Pages - ";
+var str2 = myState.pdf._pdfInfo.numPages;
+
+    document.getElementById("p1").innerHTML = str1.concat(str2);; 
+
+var cars = str2;
+var text = "";
+var i;
+for (i = 0; i < cars; i++) {
+  text += 'Page - '+ i + "<hr>";
+}
+document.getElementById("demo").innerHTML = text;
+
+
+
+
+     
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+document.getElementById('go_previous')
+        .addEventListener('click', (e) => {
+            if(myState.pdf == null
+               || myState.currentPage == 1) return;
+            myState.currentPage -= 1;
+            document.getElementById("current_page")
+                    .value = myState.currentPage;
+            render();
+        });
+
+
+
+document.getElementById('go_next')
+        .addEventListener('click', (e) => {
+            if(myState.pdf == null
+               || myState.currentPage > myState.pdf
+                                               ._pdfInfo.numPages) 
+               return;
+         
+            
+            document.getElementById("current_page")
+                    .value = myState.currentPage;
+            render();
+            myState.currentPage += 1;
+        });
+
+document.getElementById('current_page')
+        .addEventListener('keypress', (e) => {
+            if(myState.pdf == null) return;
+         
+            // Get key code
+            var code = (e.keyCode ? e.keyCode : e.which);
+         
+            // If key code matches that of the Enter key
+            if(code == 13) {
+                var desiredPage = 
+                        document.getElementById('current_page')
+                                .valueAsNumber;
+                                 
+                if(desiredPage >= 1 
+                   && desiredPage <= myState.pdf
+                                            ._pdfInfo.numPages) {
+                        myState.currentPage = desiredPage;
+                        document.getElementById("current_page")
+                                .value = desiredPage;
+                        render();
+                }
+            }
+        });
+
+document.getElementById('zoom_in')
+        .addEventListener('click', (e) => {
+            if(myState.pdf == null) return;
+            myState.zoom += 0.25;
+            render();
+        });
+
+document.getElementById('zoom_out')
+        .addEventListener('click', (e) => {
+            if(myState.pdf == null) return;
+            myState.zoom -= 0.25;
+            render();
+        });
+
+</script>
+
+<style>
+
+
+.sidebar {
+  height: auto;
+  width: 0;
+  position: absolute;
+  z-index: 1;
+  left: auto;
+  top:auto;
+  background-color: grey;
+  overflow-x: hidden;
+  transition: 0.2s;
+  padding-top: 70px;
+
+  overflow-y: auto;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+</style>
+
+<style>
+    #canvas_container {
+        width: auto;
+        height: 600px;
+        overflow: auto;
+    }
+
+    #canvas_container {
+    background: #333;
+    text-align: center;
+    border: solid 3px;
+}
+</style>
+
+
+
+
+
+          <hr>
+          
+
+          <h5><b>Solution Description</b></h5>
+         
+          <p>{{book.Description|safe}}</p>
+
+      </div>
+    </section>
+
+
+  </main><!-- End #main -->
+{% endblock %}

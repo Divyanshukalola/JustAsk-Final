@@ -1,0 +1,346 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+     <style type="text/css">
+   @media print{
+   .noprint{
+       display:none;
+   }
+}
+</style>
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section id="books" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+           <form action="/booksearch_request" method="get">
+            <div class="row"> 
+            <div class="col-sm-7">
+              <div class="input-group input-group-lg">
+              <input type="text" class="form-control mt-4" name="search" id='search' aria-label="Large" placeholder="Search By ISBN, Title or Author's Name" aria-describedby="inputGroup-sizing-sm" style="border-color: #1acc8d; border-width: 3px;width: 900px; border-radius: 5px">
+           
+              </div>
+            </div>
+
+            <div class="col-sm">
+            <div class="text-center text-lg-left">
+              
+                {% csrf_token %}
+                <input class="btn btn-get-started mt-4" type="submit" value="Search" style="border-radius: 5px;">
+            </div>
+            </div>
+
+            </div>
+             </form>
+
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+
+
+    <section class="breadcrumbs bg-white mb-0 mt-2">
+      <div class="container">
+
+        <div class="d-flex align-items-center">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>{{book.File_name}}</li>
+          </ol>
+        </div>
+
+      </div>
+
+     
+    </section><!-- End Breadcrumbs Section -->
+    <hr>
+
+    <section class="inner-page mt-0">
+      <div class="container mt-0" style="margin-bottom: 200px">
+{% if user.is_authenticated %}
+
+
+         <div class="row">
+          <div class="col-sm-9  ">
+            <h2>{{book.File_name}} | <span style="color: grey; font-size: 20px">{{book.Edition}}</span></h2>
+            <h5>ISBN: {{book.BID}} / {{book.Edition}}</h5>
+
+        
+            </div>
+          </div>
+          <hr>
+
+<!-- <div id="navigation_controls" style="background-color: lightgrey">
+        <div class="row">
+          
+
+            <div class="col-xs-auto col-sm-auto col-md-auto ml-3 mt-3">
+              <button class="btn btn-outline-secondary" id="go_previous" style="color: grey; border-color: grey">Previous</button>
+              <button class="btn btn-outline-secondary" id="go_next" style="color: grey; border-color: grey">Next</button>
+            </div>
+
+            
+            <div class="col-xs-auto col-sm-auto col-md-auto mt-3 ml-3">
+              <div id="zoom_controls">  
+                <button class="btn btn-secondary px-4 py-1" id="zoom_in" style="background-color: lightgrey; color: black; font-size: 20px"><b>+</b></button>
+                <button class="btn btn-secondary px-4 py-1" id="zoom_out" style="background-color: lightgrey;color: black;font-size: 20px"><b>-</b></button>
+              </div>
+            </div>
+           
+            <div class="col-xs-auto col-sm-auto col-md-auto ml-3 mt-3 mr-3 justify-center justify-content-md-start">
+
+              <div class="input-group mb-3 " >
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="background-color: lightgrey">Page Number</span>
+                </div>
+                <input type="number" id="current_page" value="1" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+               
+              </div>
+
+
+
+            </div>
+            
+             <div class="col-xs-auto col-sm-auto col-md-auto ml-3  mt-3">
+
+              
+
+              <p class="text-muted" id="p1" style="color: white; font-size: 20px; text-align: center"></p>
+
+            </div>
+
+        </div>
+
+    
+</div>
+ -->
+
+
+<!-- <div  id="my_pdf_viewer">
+
+
+     
+</div>
+<div id="canvas_container" style="border-color: transparent; height: 700px; background-color: #EAEAEA" >
+          <center>
+            <div id="loading" class="spinner-border text-dark ml-0" role="status"  style="margin-top: 300px; position: absolute; width: 50px; height: 50px;">
+            <span class="sr-only">Loading...</span>
+          </div>
+          </center>
+    <canvas id="pdf_renderer" class="shadow-lg p-3 mb-5 bg-white rounded" hidden='true'>
+     
+
+    </canvas>	
+
+
+
+
+</div>
+ -->
+<div id="adobe-dc-view" style="height: 700px" class="noprint"></div>
+
+<script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+<script type="text/javascript">
+  document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
+    var adobeDCView = new AdobeDC.View({clientId: "833794a4ca964d24a82764e61d50c6a9", divId: "adobe-dc-view"});
+    adobeDCView.previewFile({
+      content:{location: {url: "{{book.File.url}}"}},
+      metaData:{fileName: "{{book.File_name}}"}
+    }, {defaultViewMode: "FIT_PAGE", showDownloadPDF: false, showPrintPDF: false});
+  });
+</script>
+
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js">
+</script>
+<script>
+    var myState = {
+        pdf: null,
+        currentPage: 1,
+        zoom: 1
+    }
+ 
+    // more code here
+
+    pdfjsLib.getDocument('{{book.File.url}}').then((pdf) => {
+ 
+    myState.pdf = pdf;
+    render();
+ 
+});
+
+
+
+
+  function render() {
+    myState.pdf.getPage(myState.currentPage).then((page) => {
+ 
+    document.getElementById("loading").style.visibility = "hidden";
+    document.getElementById("pdf_renderer").hidden = false;
+
+        // more code here
+        var canvas = document.getElementById("pdf_renderer");
+    var ctx = canvas.getContext('2d');
+     
+    var viewport = page.getViewport(myState.zoom);
+
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    // Preloader
+
+
+    page.render({
+        canvasContext: ctx,
+        viewport: viewport
+    });
+
+    
+
+
+var str1 = "Pages - ";
+var str2 = myState.pdf._pdfInfo.numPages;
+
+    document.getElementById("p1").innerHTML = str1.concat(str2);; 
+     
+        });
+    }
+
+
+
+
+
+document.getElementById('go_previous')
+        .addEventListener('click', (e) => {
+            if(myState.pdf == null
+               || myState.currentPage == 1) return;
+            myState.currentPage -= 1;
+            document.getElementById("current_page")
+                    .value = myState.currentPage;
+            render();
+        });
+
+
+
+document.getElementById('go_next')
+        .addEventListener('click', (e) => {
+            if(myState.pdf == null
+               || myState.currentPage > myState.pdf
+                                               ._pdfInfo.numPages) 
+               return;
+         
+            myState.currentPage += 1;
+            document.getElementById("current_page")
+                    .value = myState.currentPage;
+            render();
+        });
+
+document.getElementById('current_page')
+        .addEventListener('keypress', (e) => {
+            if(myState.pdf == null) return;
+         
+            // Get key code
+            var code = (e.keyCode ? e.keyCode : e.which);
+         
+            // If key code matches that of the Enter key
+            if(code == 13) {
+                var desiredPage = 
+                        document.getElementById('current_page')
+                                .valueAsNumber;
+                                 
+                if(desiredPage >= 1 
+                   && desiredPage <= myState.pdf
+                                            ._pdfInfo.numPages) {
+                        myState.currentPage = desiredPage;
+                        document.getElementById("current_page")
+                                .value = desiredPage;
+                        render();
+                }
+            }
+        });
+
+document.getElementById('zoom_in')
+        .addEventListener('click', (e) => {
+            if(myState.pdf == null) return;
+            myState.zoom += 0.25;
+            render();
+        });
+
+document.getElementById('zoom_out')
+        .addEventListener('click', (e) => {
+            if(myState.pdf == null) return;
+            myState.zoom -= 0.25;
+            render();
+        });
+
+</script>
+
+<style>
+    #canvas_container {
+        width: auto;
+        height: 600px;
+        overflow: auto;
+    }
+
+    #canvas_container {
+    background: #333;
+    text-align: center;
+    border: solid 3px;
+}
+</style>
+
+          <hr>
+          
+
+          <h5><b>Book Description</b></h5>
+         
+          <p>{{book.Description|safe}}</p>
+          <hr>
+          
+
+          {% if book.booksol != '' %}
+          <h3><b>Book Solution</b></h3>
+          <br>
+          <div class="row">
+            <div class="col-sm-4">
+              <img src="{{book.booksol.Bcover.url}}" width="250" style="border-radius: 5px">
+            </div>
+            <div class="col-sm-6">
+                  <h6><b>Title: </b>{{book.booksol.File_name}}</h6>
+                  <h6><b>Edition: </b>{{book.booksol.Edition}}</h6>
+                  <h6><b>Author: </b>{{book.booksol.Auth}}</h6>
+                  <br>
+                  <h6><b>Description: </b><hr>{{book.booksol.Description|safe}}</h6>
+                  <br>
+
+          
+
+                 <form action="/booksoltuion_view" method="get">
+                    <input type="text" class="form-control" name="bid" id='bid'  value="{{book.BID}}" hidden="True">
+                  <input type="submit" value="Open Solution" style="border-color: transparent; background-color: transparent;color: #1acc8d">
+                </form>
+            </div>
+          </div>
+          
+      
+          {% else %}
+    
+          {% endif %}
+
+
+{% else %}
+ <h2 style="color: lightgrey">You need to Sign In to View this section!</h2>
+
+{%endif%}
+      </div>
+    </section>
+
+
+  </main><!-- End #main -->
+{% endblock %}

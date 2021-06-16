@@ -1,0 +1,421 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+   <!-- ======= Breadcrumbs Section ======= -->
+    <section id="study" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+           <form action="/search_request" method="get">
+            <div class="row"> 
+            <div class="col-sm-7">
+              <div class="input-group input-group-lg">
+              <input type="text" class="form-control mt-4" name="search" id='search' aria-label="Large" placeholder="Find Solutions" aria-describedby="inputGroup-sizing-sm" style="border-color: #1acc8d; border-width: 3px;width: 900px; border-radius: 5px">
+           
+              </div>
+            </div>
+
+            <div class="col-sm">
+            <div class="text-center text-lg-left">
+              
+                {% csrf_token %}
+                <input class="btn btn-get-started mt-4" type="submit" value="Search" style="border-radius: 5px;">
+            </div>
+            </div>
+
+            </div>
+             </form>
+
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+
+
+    <section class="breadcrumbs bg-white mb-0 mt-2">
+      <div class="container">
+
+        <div class="d-flex align-items-center">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>Books</li>
+          </ol>
+        </div>
+
+      </div>
+
+     
+    </section><!-- End Breadcrumbs Section -->
+<hr>
+    <section class="inner-page mt-0">
+    	<select id="langsel" hidden="">
+    		<option value='eng'selected>English</option>
+    	</select>
+      <div class="container mt-0" style="margin-bottom: 200px">
+
+
+          <h1>Post your Questions</h1>
+          <h6 class="card-subtitle mb-2 text-muted" style="font-size: 13px">Your question might as well solve other's doubt. Do not hesitate to ask!</h6>
+          {% if user.is_authenticated %}
+           <h6>Questions left to ask: {{user.student.qscore}}</h6>
+          {% else %}
+          <h6>You need to login</h6>
+          {% endif %}
+         
+            <hr>
+
+         <div class="row">
+
+          <div class="col-sm">
+            
+
+             <form method="post" action="/questionpost/" enctype="multipart/form-data">
+              {% csrf_token %}
+               <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Your Full Name</span>
+                </div>
+                <input type="text" class="form-control" id="auth" name="auth" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+
+
+               <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Your Email</span>
+                </div>
+                <input type="text" class="form-control" id="email" name="email" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+
+
+
+              <div class="form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 5px 0px 0px 5px;">Field of the Notes</span>
+
+                  <select class="form-control" id="field" name="field" style="border-radius: 0px 5px 5px 0px;">
+                  <option>other</option>
+                  <option>computer science</option>
+                  <option>math</option>
+                  <option>science and engineering</option>
+                  <option>social science and history</option>
+               
+                  <option>language</option>
+                  <option>business</option>
+                </select>
+                </div>
+                
+              </div>
+
+              <br>
+              <br>
+
+              <div class="input-group mb-3">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Question</span>
+                </div>
+                  </div>
+                  <div class="col-12">
+                      <textarea type="text" class="form-control mb-4" id="question" name="question" aria-label="Default" aria-describedby="inputGroup-sizing-default" style="width: auto;">{{question}}</textarea>
+
+                  </div>
+                </div>
+                
+              
+                <h5 style="color: lightgrey" class="float-left">Please make sure you have typed your question correctly! This field is not supposed to be empty.</h5>
+              </div>
+              <br>
+              
+              <div class="row">
+              	<div class="col-6 col-md-4 col-lg-4">
+              		<h6>Files are Optional to upload</h6>
+	              	<div class="input-group mb-3">
+	                <div class="input-group-prepend">
+	                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Upload file</span>
+
+	                </div>
+
+	                <div class="box" style="overflow: hidden">
+								<input type="file" name="file-1" id="file-1" class=" border p-3 inputfile" />
+								<label for="file-1" hidden=""><span>Choose a file&hellip;</span></label>
+							</div>
+							<br>
+
+
+							 
+
+	<!-- 
+	                 <input class=" border p-3 inputfile" type="file" class="form-control-file" id="file" name="file" accept="image/*;capture=camera"> -->
+	                
+	              </div>
+
+             <!--   <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Upload file 2</span>
+
+                </div>
+                 <input class=" border p-3" type="file" class="form-control-file" id="file2" name="file2" accept="image/*;capture=camera">
+                
+              </div> -->
+
+
+              	</div>
+              	<div class="col-12 col-md-9 col-lg-8">
+              		<h6>Transcribed text</h6>
+              		<div id="log">
+							<span id="startPre">	
+								<p>Your transcribed text will appeare here!</p>
+								<p>You can copy it or you can manually write your question in the given text field.</p>
+							</span>
+					</div>
+              	</div>
+              	
+              </div>
+              
+
+               
+
+               <!--  <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Upload file 3</span>
+
+                </div>
+                 <input class=" border p-3" type="file" class="form-control-file" id="file3" name="file3" accept="image/*;capture=camera">
+                
+              </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Upload file 4</span>
+
+                </div>
+                 <input class=" border p-3" type="file" class="form-control-file" id="file4" name="file4" accept="image/*;capture=camera">
+                
+              </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Upload file 5</span>
+
+                </div>
+                 <input class=" border p-3" type="file" class="form-control-file" id="file5" name="file5" accept="image/*;capture=camera">
+                
+              </div>
+
+                <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Upload file 6</span>
+
+                </div>
+                 <input class=" border p-3" type="file" class="form-control-file" id="file6" name="file6" accept="image/*;capture=camera">
+                
+              </div> -->
+              <br>
+              <br>
+
+
+
+            
+            <center>
+              {% if user.is_authenticated %}
+              {% if user.student.qscore != 0 %}
+              <button type="submit" class="btn btn-get-started">Submit</button>
+              {% else %}
+              <div id="success-alert">
+                  
+                  
+                  <div  class="alert alert-warning alert-dismissible fade show " style="position: relative;z-index: 1;width: auto; height: auto; top: auto;border-color: transparent; background-color: rgba(5, 3, 100, 1)" data-aos="fade-right" data-aos-delay="100">
+                  <strong style="color: white;">Message From Just Ask! </strong> 
+                  
+
+                  <br><span style="color: lightgrey">You can only ask 20 questions per month</span> 
+                 
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true" style="color: lightgrey">&times;</span>
+                  </button>
+                </div>
+                
+              </div>
+              <a href="/profile"><button class="btn btn-get-started">Submit</button></a>
+              {% endif %}
+           
+          {% else %}
+          <a href="/login"><button class="btn btn-get-started">Submit</button></a>
+          {% endif %}
+              
+            </center>
+              
+            
+              
+
+               
+
+  
+    </form>
+          </div>
+        </div>
+        <hr>
+        <p><b>Note: </b>The e-notes you contribute will be available to the subscriber for free! There is no charge applied on viewing e-notes! Please feel free to <a href="/customer_service">contact us</a> if you have more specific questions.</p>
+        <br><br><br><br>
+
+
+
+
+
+
+      
+
+      </div>
+    </section>
+
+     <script>
+    tinymce.init({
+      selector: '#question',
+      height: 200,
+      menubar: false,
+       max_width: 900,
+       width: '100%',
+       plugins: 'autoresize',
+      plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table paste code help wordcount'
+  ],
+  toolbar: 'undo redo | formatselect | ' +
+  'bold italic backcolor | alignleft aligncenter ' +
+  'alignright alignjustify | bullist numlist outdent indent | ' +
+  'removeformat | help',
+  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+    });
+  </script>
+
+
+ 
+
+<!-- 
+     <script>tinymce.init({
+      selector: '#question',
+      height: 200,
+      theme: 'modern',
+      plugins: [
+        'advlist autolink lists charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen',
+        'insertdatetime nonbreaking save table contextmenu directionality',
+        'emoticons paste textcolor colorpicker textpattern codesample toc'
+      ],
+      toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+      toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+      image_advtab: true,
+      templates: [
+        { title: 'Test template 1', content: 'Test 1' },
+        { title: 'Test template 2', content: 'Test 2' }
+      ],
+      content_css: [
+        '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+        '//www.tinymce.com/css/codepen.min.css'
+      ]
+     });
+    </script> -->
+
+
+
+
+		<style type="text/css">
+			#log > div {
+  color: #313131;
+  border-top: 1px solid #dadada;
+  padding: 9px;
+  display: flex;
+}
+#log > div:first-child {
+  border: 0;
+}
+.status {
+  min-width: 250px;
+}
+#log {
+  border: 1px solid #dadada;
+  padding: 10px;
+  min-height: 200px;
+}
+.image-container img{
+  border: 1px solid #dadada;
+}
+progress {
+  display: block;
+  width: 100%;
+  transition: opacity 0.5s linear;
+}
+progress[value="1"] {
+  opacity: 0.5;
+}
+select {
+  padding: 12px 5px;
+  width: 209px;
+}
+
+
+
+#arrow-right ,
+#arrow-down {
+  font-size: 3em;
+}
+
+#arrow-right {
+  position: absolute;
+  top: 60px;
+}
+#arrow-down{
+  width: 50px;
+  margin: 10px auto;
+}
+
+#arrow-right.fa-arrow-right ,
+#arrow-right.fa-spin ,
+#arrow-down.fa-arrow-down ,
+#arrow-down.fa-spin  {
+  color: #d3394c;
+}
+
+.fa-check{
+  color:green;
+}
+
+#log pre {
+  white-space: pre-wrap;       /* css-3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+ }
+
+ #startLink{
+   text-decoration: underline;
+   margin-top: 100px;
+ }
+
+ @media screen and (min-width: 992px) {
+  #startPre{
+    position: absolute;
+    top: 50px;
+    padding: 20px;
+  }
+}
+		</style>
+
+
+    
+
+
+   
+
+
+  </main><!-- End #main -->
+{% endblock %}

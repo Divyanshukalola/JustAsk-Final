@@ -1,0 +1,416 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+    <!-- ======= Breadcrumbs Section ======= -->
+<br><br><br><br>
+
+
+    <section id="subs" class="breadcrumbs bg-white mb-0 mt-0">
+      <div class="container">
+
+        <div class="d-flex align-items-center">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>Rates</li>
+          </ol>
+        </div>
+
+      </div>
+
+     
+    </section><!-- End Breadcrumbs Section -->
+<hr>
+
+
+
+
+
+    <section class="inner-page mt-0">
+      <div class="container mt-0" style="margin-bottom: 200px">
+
+       
+          <h1 class="display-4">Subscription Plans</h1>
+          <h4>Special Offers* are for limited time only!</h4>
+            <hr>
+            <br>
+    
+      
+        <div class="row justify-content-center" data-aos="fade-up">
+
+          <div class="card-deck justify-content-center ml-0">
+            <div class="col-9 col-lg-5 col-sm-12 col-md-7" style="border-radius: 10px">
+                    <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 23rem; border-color: transparent; ">
+                      <div class="card-body mb-3  mt-4">
+                        <img src="{% static 'assets/img/checklist.gif' %}" width="130px" style="margin-left:25%; margin-bottom: 15%">
+                        <h1 style="text-align: center">Free <span class="text-muted" style="font-size: 15px">/ First Month</span></h1>
+                        <center>
+                        	
+                           <h3 class="card-subtitle mb-2 text-muted mt-3" style="font-weight:normal;text-align: center">Special Offer* <br>for limited time only!</h3>
+                           <p style="color: grey">Free for first month.</p>
+
+                        <p style="color: grey">Cancel Anytime</p>
+                        </center>
+                       
+
+                       
+                      </div>
+                      {% if user.is_authenticated %}
+                         {% if stud.subs != True%}
+                        <center><a href="/payment_freefirst"><button type="button" class="btn btn-get-started mb-4">Get Access</button></a></center>
+                        {% else %}
+                          <center><a href="/profile"><button type="button" class="btn btn-get-started mb-4">Get Access</button></a></center>
+                        {% endif %}
+                      {% else %}
+                      <center><a href="/login"><button type="button" class="btn btn-get-started mb-4">Get Access</button></a></center>
+                      {% endif %}
+                      <center><p class="text-muted">*No Addtional Charges</p></center>
+                    </div>
+                </div>
+
+
+  
+                <div class="col-10 col-lg-5 col-sm-7 col-md-7" style="border-radius: 10px">
+                    <div class="card shadow p-3 bg-white rounded" style="width: 23rem;height: auto; border-color: transparent; ">
+                      <div class="card-body  mt-4">
+                        <img src="{% static 'assets/img/connect.gif' %}" width="150px" style="margin-left:25%; margin-bottom: 15%">
+                        <h1 style="text-align: center"><span id="mnth">7.99 USD</span>  <span class="text-muted" style="font-size: 15px">/ Month</span></h1>
+                  
+                         <center>
+                         	<!-- <h1><span class="text-muted" style="font-size: 25px">~ 7 USD</span></h1> -->
+                           <h3 class="card-subtitle mb-2 text-muted mt-3" style="font-weight:normal;text-align: center">Monthly Subscription Rate</h3>
+                           <p style="color: grey">Earn 50 credits upon Subscription</p>
+                        <p style="color: grey">Cancel Anytime</p>
+                        </center>
+
+                       
+                      </div>
+                      {% if user.is_authenticated %}
+                        {% if stud.subs != True%}
+                            <center><a href="" data-toggle="modal" data-target="#paym"><button type="button" class="btn btn-get-started mb-4">Get Access</button></a></center>
+                        {% else %}
+                          <center><a href="/profile"><button type="button" class="btn btn-get-started mb-4">Get Access</button></a></center>
+                        {% endif %}
+                         {% else %}
+                      <center><a href="/login"><button type="button" class="btn btn-get-started mb-4">Get Access</button></a></center>
+                      {% endif %}
+                    <center><p class="text-muted">Tax Included</p></center>
+                    </div>
+                </div>
+                
+                <div class="col-10 col-lg-5 col-sm-7 col-md-7 mt-4" style="border-radius: 10px">
+                    <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 23rem;height: auto;border-color: transparent;">
+                      <div class="card-body mt-1">
+                        <img src="{% static 'assets/img/diamond.svg' %}" width="150px" style="margin-left:25%; margin-bottom: 15%">
+                        <h1 style="text-align: center"><span id="yrl">79.99 USD</span>  <span class="text-muted" style="font-size: 15px">/ Year</span></h1>
+                        <center>
+                        	<!-- <h1><span class="text-muted" style="font-size: 25px">~ 70 USD</span></h1> -->
+                           <h3 class="card-subtitle mb-2 text-muted mt-3" style="font-weight:normal;text-align: center">Yearly Subscription Rate</h3>
+                           <p>Get 2 months free (For Limited time only) </p>
+                           <p style="color: grey">Earn 200 credits upon Subscription</p>
+                        <p style="color: grey">Cancel Anytime</p>
+                        </center>
+                        
+                       
+                      </div>
+                      {% if user.is_authenticated %}
+                           {% if stud.subs != True%}
+                          <center><a href="" data-toggle="modal" data-target="#payy"><button type="button" class="btn btn-get-started mb-4">Get Access</button></a></center>
+
+
+                          {% else %}
+                            <center><a href="/profile"><button type="button" class="btn btn-get-started mb-4">Get Access</button></a></center>
+                          {% endif %}
+                      {% else %}
+                      <center><a href="/login"><button type="button" class="btn btn-get-started mb-4">Get Access</button></a></center>
+                      {% endif %}
+                      <center><p class="text-muted">Tax Included</p></center>
+                    </div>
+                </div>
+
+
+               
+
+
+              </div>
+               
+            </div>
+            <br>
+            <div class="row justify-content-center" data-aos="fade-up">
+            	<div class="col-2">
+            		<div class="form-check">
+				    <input class="form-check-input" type="radio" name="gridRadios" id="uk" value="option1" onchange="init()">
+				    <img src="{% static 'assets/img/uk.svg'%}" width="40" >
+				  </div>
+            	</div>
+            	<div class="col-2">
+            		<div class="form-check">
+				    <input class="form-check-input" type="radio" name="gridRadios" id="us" value="option1" onchange="init()" checked>
+				    <img src="{% static 'assets/img/us.svg'%}" width="40" >
+				  </div>
+            	</div>
+              
+                <div class="col-2">
+                <div class="form-check">
+            <input class="form-check-input" type="radio" name="gridRadios" id="inr" value="option1" onchange="init()">
+            <img src="{% static 'assets/img/inr.svg'%}" width="40" >
+          </div>
+              </div>
+
+            	<div class="col-2">
+            		<div class="form-check">
+					    <input class="form-check-input" type="radio" name="gridRadios" id="aus" value="option1" onchange="init()">
+					    <img src="{% static 'assets/img/aus.svg'%}" width="40" >
+					  </div>
+            	</div>
+
+            
+
+            	<div class="col-2">
+            		<div class="form-check">
+				    <input class="form-check-input" type="radio" name="gridRadios" id="china" value="option1" onchange="init()">
+				    <img src="{% static 'assets/img/china.svg'%}" width="40" >
+				  </div>
+            	</div>
+
+            </div>
+            <br>
+          
+            <br>
+            <center><h4 data-aos="fade-up">Currencies Accepted: USD, INR, GBP, AUD, CNY</h4>
+            	<p data-aos="fade-up" class="mt-0" style="font-size: 13px; text-align: center">No addtional charges for currency conversion.</p>
+            	  <p data-aos="fade-up" class="mt-0" style="font-size: 13px; text-align: center"><b>NOTE: </b>These rates are converted from USD therefore, they are just an approximation. Do no take the displayed rates as your final price.</p>
+            </center>
+            
+            <hr data-aos="fade-up">
+            <p data-aos="fade-up" class="mt-0" style="font-size: 11px; text-align: center"><b>Note:</b> We do not have any refund policy if you decide to change your mind.</p>
+
+            <style>
+.vl {
+  border-left: 1px solid lightgrey;
+  height: 500px;
+}
+</style>
+       
+
+
+      <h2 data-aos="fade-up" class="mt-5 mb-5" style="text-align: center;font-weight:normal">Your books are equiped with following amenities!</h2>
+
+            <div class="row mt-5 justify-content-center" data-aos="fade-up">
+                <div class="col-9 col-md-5 col-sm-7 mt-5 col-lg-4">
+                    <div class="card" style="width: 18rem; border-color: transparent;">
+                      <div class="card-body">
+                        <img src="{% static 'assets/img/palm-scan.gif' %}" width="100px" style="margin-left:30%; margin-bottom: 20%">
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal;text-align: center">High Quality Scans</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">Converted hardcopy version of the book will have best possible scan quality</p>
+                       
+                      </div>
+                    </div>
+                </div>
+                <div class="col-9 col-md-5 col-sm-7 mt-5 col-lg-4">
+                    <div class="card" style="width: 18rem;border-color: transparent;">
+                      <div class="card-body">
+                        <img src="{% static 'assets/img/checklist.gif' %}" width="100px" style="margin-left:30%; margin-bottom: 20%">
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal; text-align: center">Checked thoroughly!</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">Books are checked multiple times before getting to you for any missing sections.</p>
+                       
+                      </div>
+                    </div>
+                </div>
+                <div class="col-9 col-md-5 col-sm-7 mt-5 col-lg-4">
+                    <div class="card" style="width: 18rem;border-color: transparent;">
+                      <div class="card-body">
+                        <img src="{% static 'assets/img/create-order.gif' %}" width="100px" style="margin-left:30%; margin-bottom: 20%">
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal; text-align: center">Save Upto 80% on your orders</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">Spend less on your books and pay more attention to your semesters.</p>
+                        
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <hr data-aos="fade-up">
+
+            <h2 data-aos="fade-up"  class="mt-5 mb-5" style="text-align: center;font-weight:normal">Common FAQ regarding Book Renting!</h2>
+
+            <div class="row mt-5 justify-content-center" data-aos="fade-up">
+                <div class="col-9 mt-5 col-sm-7 col-md-5 col-lg-4">
+                    <div class="card" style="width: 18rem; border-color: transparent;">
+                      <div class="card-body">
+                        
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal;text-align: center">Do I have to subscribe to view E-Books?</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">Yes! You have to subscribe to view E-Books. Try our one months Free Plan. </p>
+                        <center><a href="/rates">Subscribe</a></center>
+                       
+                      </div>
+                    </div>
+                </div>
+                <div class="col-9 mt-5 col-sm-7 col-md-5 col-lg-4">
+                    <div class="card" style="width: 18rem;border-color: transparent;">
+                      <div class="card-body">
+                        
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal; text-align: center">Do I get a Hardcopy or an E-book if I order from Just Ask?</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">Just Ask only provides E-book Renting services for now.</p>
+                       
+                      </div>
+                    </div>
+                </div>
+                <div class="col-9 mt-5 col-sm-7 col-md-5 col-lg-4">
+                    <div class="card" style="width: 18rem;border-color: transparent;">
+                      <div class="card-body">
+                        
+                        <h4 class="card-subtitle mb-2 text-muted" style="font-weight:normal; text-align: center">What do I do if I want to keep the book for a long time?</h4>
+                        <p class="card-text" style="font-size: 15px; text-align: center">You can always extend your rental time. With two easy steps you can extend your purchase.</p>
+                        
+                      </div>
+                    </div>
+                </div>
+            </div>
+      
+
+      
+
+      </div>
+    </section>
+
+
+
+
+
+<div class="modal fade" id="paym" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Payment Options!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        	
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>7.99 USD (Including Tax)</h4>
+      	<!-- <p style="font-size: 15px"><b>Amount:</b> 7 USD + *Tax</p>
+      	<p style="font-size: 15px"><b>Total: </b>7.99 USD</p> -->
+      	<hr>
+<!-- <h5>We are not accepting any payments right now!</h5>
+        	<p>If you are here for the frist time please try our 1 month free trial. We apologies for your inconvinience.</p> -->
+        <!-- <div id="paypal-button-container-m"></div> -->
+        <center>{{ formm.render }}</center>
+
+        
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="payy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Payment Options!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        	
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>79.99 USD (Including Tax)</h4>
+      	<!-- <p style="font-size: 15px"><b>Amount:</b> 79 USD + *Tax</p>
+      	<p style="font-size: 15px"><b>Total: </b>79.99 USD</p> -->
+      	<hr>
+<!-- <h5>We are not accepting any payments right now!</h5>
+        	<p>If you are here for the frist time please try our 1 month free trial. We apologies for your inconvinience.</p> -->
+       <!--  <div id="paypal-button-container-y"></div>	 -->
+       <center><div style="size: 300px">{{ formy.render }}</div></center>
+
+
+        
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- <script src="https://www.paypal.com/sdk/js?client-id=AdSiKkiic0JtbyZKRvjqzNLvbj4Y7t9CJ4oCFAkrc7gsYg0_F0anIVUnsP0st0_jo0qeLlNB6tFzOZgd&currency=USD&disable-funding=card"></script> -->
+
+
+
+<script type="text/javascript">
+
+  function getRate(from, to) {
+    var script = document.createElement('script');
+    script.setAttribute('src', "https://query.yahooapis.com/v1/public/yql?q=select%20rate%2Cname%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes%3Fs%3D"+from+to+"%253DX%26f%3Dl1n'%20and%20columns%3D'rate%2Cname'&format=json&callback=parseExchangeRate");
+    document.body.appendChild(script);
+  }
+
+  function parseExchangeRate(data) {
+    var name = data.query.results.row.name;
+    var rate = parseFloat(data.query.results.row.rate, 10);
+    alert("Exchange rate " + name + " is " + rate);
+  }
+
+	var aus, us, inr, uk, china;
+function init()
+{
+
+    aus = document.getElementById("aus");
+    us = document.getElementById("us");
+    inr = document.getElementById("inr");
+    uk = document.getElementById("uk");
+    china = document.getElementById("china");
+
+
+    mnth =  document.getElementById('mnth');
+    yrly =  document.getElementById('yrl');
+
+
+    var INR = 74.44;
+    var AUSD = 1.42;
+    var UKD = 0.77;
+    var YEN = 6.71;
+
+
+
+  if (aus.checked == true){
+
+    mnth.innerHTML = "~"+(7.99*AUSD).toString().substr(0, 5)+" AUD";
+    yrly.innerHTML = "~"+(79.99*AUSD).toString().substr(0, 6)+" AUD";
+  } else if (us.checked == true){
+    
+     mnth.innerHTML = (7.99*1).toString().substr(0, 4) +" USD";
+    yrly.innerHTML = (79.99*1).toString().substr(0, 5)+" USD";
+  }else if (inr.checked == true){
+  	
+    mnth.innerHTML = "~"+(7.99*INR).toString().substr(0, 6)+" RS";
+    yrly.innerHTML = "~"+(79.99*INR).toString().substr(0, 7)+" RS";
+  }else if (uk.checked == true){
+  	
+    mnth.innerHTML = "~"+(7.99*UKD).toString().substr(0, 4)+" GBP";
+    yrly.innerHTML = "~"+(79.99*UKD).toString().substr(0, 5)+" GBP";
+  }else if (china.checked == true){
+  	
+    mnth.innerHTML = "~"+(7.99*YEN).toString().substr(0, 5)+" CNY";
+    yrly.innerHTML = "~"+(79.99*YEN).toString().substr(0, 6)+" CNY";
+  }else{
+  	
+    mnth.innerHTML = (7.99*1).toString().substr(0, 4)+" USD";
+    yrly.innerHTML = (79.99*1).toString().substr(0, 5)+" USD";
+  }
+}
+	init();
+
+</script>
+
+  </main><!-- End #main -->
+{% endblock %}

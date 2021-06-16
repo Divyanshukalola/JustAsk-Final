@@ -1,0 +1,367 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+    <!-- ======= Breadcrumbs Section ======= -->
+     <br><br>
+
+
+    <section id="study" class="breadcrumbs bg-white mb-0 mt-5">
+      <div class="container">
+
+        <div class="d-flex align-items-center">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>Contribute</li>
+          </ol>
+        </div>
+
+      </div>
+
+     
+    </section><!-- End Breadcrumbs Section -->
+<hr>
+ {% if messages%}
+      {% for m in messages %}
+    
+      <div data-aos="fade-right" data-aos-anchor="#example-anchor"
+     data-aos-offset="500"
+     data-aos-duration="500" class="alert alert-warning alert-dismissible fade show" style="position: absolute;z-index: 1;width: auto; height: auto; top: auto;border-color: transparent; background-color: rgba(5, 3, 100, 1)" role="alert">
+        <strong style="color: white;">Message From Just Ask! </strong> 
+        
+
+        <br><span style="color: lightgrey">{{m}}</span>
+       
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" style="color: lightgrey">&times;</span>
+        </button>
+      </div>
+
+     {% endfor%}
+     <br>
+  <br>
+  {% endif%}
+
+    <section class="inner-page mt-0">
+      <div class="container mt-0" style="margin-bottom: 200px">
+
+        <div class="row">
+
+          <div class="col-sm">
+            <h2>Contribute Notes!</h2>
+            <hr>
+            <p>Before you contribute to Just Ask please read this carefully. Just Ask only provides credits to the contributors who decides to upload their resources. Notes that are uploaded by the contributors will be displayed under contributor's name. All the notes that are uploaded by the contributors will be reviewed before displaying the notes permanentaly. If Just Ask thinks that a particular resources is not legit or is missleading than Just Ask has all rights to remove that particular resource. <b>Please upload your notes only if you agree to our terms.</b></p>
+            <hr>
+
+             <form method="post" action="/note_contrib/" enctype="multipart/form-data">
+              {% csrf_token %}
+               <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Your Full Name</span>
+                </div>
+                <input type="text" class="form-control" id="auth" name="auth" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+              <p style="color: lightgrey">Your name will be displayed as the author of the resource that you upload.</p>
+
+
+
+               <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Your Email</span>
+                </div>
+                <input type="text" class="form-control" id="email" name="email" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+
+
+           
+               <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Title of your notes</span>
+                </div>
+                <input type="text" class="form-control" id="title" name="title" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+
+              <div class="form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 5px 0px 0px 5px;">Field of the Notes</span>
+
+                  <select class="form-control" id="field" name="field" style="border-radius: 0px 5px 5px 0px;">
+                  <option>other</option>
+                  <option>computer science</option>
+                  <option>math</option>
+                  <option>science and engineering</option>
+                  <option>social science and history</option>
+               
+                  <option>language</option>
+                  <option>business</option>
+                </select>
+                </div>
+                
+              </div>
+
+              <br>
+              <br>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Description</span>
+                </div>
+                <input type="text" class="form-control" id="foo" name="foo" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+              <p style="color: lightgrey">We would like you to mention all the keywords that is included in your notes.</p>
+
+
+              <br>
+              <br>
+
+
+
+              <div class="row">
+                  <div class="col-lg-5">
+                      <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Upload file (PDF)</span>
+
+
+                </div>
+                 <input class=" border p-3" type="file" class="form-control-file" id="file" name="file" accept="application/pdf">
+                
+              </div>
+              <p style="color: lightgrey">Please upload pdf formatted files only!</p>
+
+                  </div>
+
+                  <div class="col-lg-5">
+                    
+                  </div>
+                </div>
+            <center>
+              <button type="submit" class="btn btn-get-started">Submit</button>
+            </center>
+            <br>
+              
+            
+              
+
+               
+
+  
+    </form>
+          </div>
+        </div>
+        <hr>
+        <p><b>Note: </b>The notes you contribute will be available to the subscribers for viewing only after Just Ask verifies the notes! Please feel free to <a href="/customer_service">contact us</a> if you have any questions.</p>
+        <!-- <br><br><br><br> -->
+        
+
+
+<!-- 
+        <div class="row">
+          <div class="col-sm">
+            <h2>Contribute Books!</h2>
+            <hr>
+
+             <form method="post" action="/book_contrib/" onsubmit="return Checkfiles(this);" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Your Full Name</span>
+                </div>
+                <input type="text" class="form-control" id="name" name="name" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+
+               <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Your Email</span>
+                </div>
+                <input type="text" class="form-control" id="email" name="email" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+
+               <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Author of the Book</span>
+                </div>
+                <input type="text" class="form-control" id="auth" name="auth" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+
+
+             
+               <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Title of the Book</span>
+                </div>
+                <input type="text" class="form-control" id="title" name="title" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+
+              
+               <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Edition of the Book (Eg: "1st Edition")</span>
+                </div>
+                <input type="text" class="form-control" id="edition" name="edition" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+
+
+              <div class="form-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 5px 0px 0px 5px;">Field of the Book</span>
+
+                  <select class="form-control" id="field" name="field" style="border-radius: 0px 5px 5px 0px;">
+                  <option>other</option>
+                  <option>computer science</option>
+                  <option>math</option>
+                  <option>physical science and engineering</option>
+                  <option>arts and designing</option>
+                  <option>social science</option>
+                  <option>health</option>
+                  <option>data science</option>
+                  <option>language</option>
+                  <option>business</option>
+                </select>
+                </div>
+                
+              </div>
+
+
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">ISBN Number</span>
+                </div>
+                <input type="text" class="form-control" id="isbn" name="isbn" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+
+              <br>
+              <br>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Description</span>
+                </div>
+                <input type="text" class="form-control" id="foo1" name="foo1" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
+              <br>
+              <br>
+
+
+
+              <div class="row">
+                  <div class="col-lg-5">
+                      <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Upload file (PDF)</span>
+
+                      </div>
+                       <input class=" border p-3" type="file" id="file" name="file" class="form-control-file">
+                      
+                    </div>
+                  </div>
+                  <div class="col-lg-5">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default" style="border-radius: 1px">Upload Cover Image file (PNG, JPEG)</span>
+
+                      </div>
+                       <input class=" border p-3" type="file" id="file2" name="file2" accept="image/*" class="form-control-file">
+                      
+                    </div>
+                  </div>
+              </div>
+<center>
+  <button type="submit" class="btn btn-get-started">Submit</button>
+</center>
+              
+            
+              
+
+               
+
+  
+    </form>
+          </div>
+        </div>
+        <hr>
+        <p><b>Note: </b>The Book that you contribute will be used as a free resource. There are no charges on the book that are contributed! Please feel free to <a href="/customer_service">contact us</a> if you have more specific questions.</p>
+    -->
+      
+
+      </div>
+    </section>
+
+    <script src="//cdn.tinymce.com/4/tinymce.js"></script>
+
+    <script type="text/javascript">
+        function Checkfiles()
+        {
+        var fup = document.getElementById('filename');
+        var fileName = fup.value;
+        var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+        // Another way: checking the type of the file
+          if ( fup.files[0].type === 'application/pdf' ) {
+              alert("Upload pdf files only");
+              console.log( 'It is validated!' )
+          }
+
+        }
+
+
+
+
+    </script>
+
+    <script>tinymce.init({
+      selector: '#foo',
+      height: 200,
+      theme: 'modern',
+      plugins: [
+        'advlist autolink lists charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen',
+        'insertdatetime nonbreaking save table contextmenu directionality',
+        'emoticons paste textcolor colorpicker textpattern codesample toc'
+      ],
+      toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+      toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+      image_advtab: true,
+      templates: [
+        { title: 'Test template 1', content: 'Test 1' },
+        { title: 'Test template 2', content: 'Test 2' }
+      ],
+      content_css: [
+        '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+        '//www.tinymce.com/css/codepen.min.css'
+      ]
+     });
+    </script>
+
+
+
+    <script>tinymce.init({
+      selector: '#foo1',
+      height: 200,
+      theme: 'modern',
+      plugins: [
+        'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen',
+        'insertdatetime media nonbreaking save table contextmenu directionality',
+        'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+      ],
+      toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+      toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+      image_advtab: true,
+      templates: [
+        { title: 'Test template 1', content: 'Test 1' },
+        { title: 'Test template 2', content: 'Test 2' }
+      ],
+      content_css: [
+        '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+        '//www.tinymce.com/css/codepen.min.css'
+      ]
+     });
+    </script>
+
+  </main><!-- End #main -->
+{% endblock %}

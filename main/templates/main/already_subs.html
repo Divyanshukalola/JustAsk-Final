@@ -1,0 +1,183 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+     <br><br>
+    
+
+
+    <section class="breadcrumbs bg-white mb-0 mt-5">
+      <div class="container">
+
+        <div class="d-flex align-items-center">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>Already Subscribed</li>
+          </ol>
+        </div>
+
+      </div>
+
+     
+    </section><!-- End Breadcrumbs Section -->
+<hr>
+
+ {% if diff >= 0 %}
+
+    <section class="inner-page mt-0">
+      <div class="container mt-0" style="margin-bottom: 200px">
+
+        <center><h1>Already Subscribed!</h1></center>
+          <hr>
+          <center>
+          <p><span style="font-size: 20px;"><b>Name:</b></span> <span style="font-size: 20px; color: grey">{{student.FirstName}} {{student.SecondName}}</span></p> 
+           <p><span style="font-size: 20px;"><b>Student ID:</b></span> <span style="font-size: 20px;color: grey">{{student.Studentid}}</span></p>
+           <hr>
+  
+</center>
+           <center>
+
+           {% if student.anual %}
+           <p class="mb-5"><span style="font-size: 25px;color: grey">You are Subscribed for an Annual Plan</span></p>
+           <p class="mb-5"><span style="font-size: 25px;color: black">Days Remaining: </span><span style="font-size: 40px">{{diff}}</span></p>
+           <p><span style="font-size: 20px;color: grey"><b>Subscription Started:</b> </span><span style="font-size: 20px">{{student.StartDate}}</span></p>
+           <p><span style="font-size: 20px;color: grey"><b>Subscription Ending:</b> </span><span style="font-size: 20px">{{student.EndDate}}</span></p>
+
+           {% else %}
+
+              {% if diff > 31 %}
+
+                 <p class="mb-5"><span style="font-size: 25px;color: grey">You are Subscribed for Free one month trial Plan</span></p>
+                 <p class="mb-5"><span style="font-size: 25px;color: black">Days Remaining: </span><span style="font-size: 40px">{{diff}}</span></p>
+                 <p><span style="font-size: 20px;color: grey"><b>Subscription Started:</b> </span><span style="font-size: 20px">{{student.StartDate}}</span></p>
+                 <p><span style="font-size: 20px;color: grey"><b>Subscription Ending:</b> </span><span style="font-size: 20px">{{student.EndDate}}</span></p>
+               {%else%}
+                   <p class="mb-5"><span style="font-size: 25px;color: grey">You are Subscribed for 1 month Plan</span></p>
+                 <p class="mb-5"><span style="font-size: 25px;color: black">Days Remaining: </span><span style="font-size: 40px">{{diff}}</span></p>
+                 <p><span style="font-size: 20px;color: grey"><b>Subscription Started:</b> </span><span style="font-size: 20px">{{student.StartDate}}</span></p>
+                 <p><span style="font-size: 20px;color: grey"><b>Subscription Ending:</b> </span><span style="font-size: 20px">{{student.EndDate}}</span></p>
+               {%endif%}
+
+           {% endif %}
+           
+          <hr>
+          <p style="font-size: 11px"><b>Note: </b>You can only renew your plan after it expires. So use your remaining days before upgrading or degrading.</p>
+          <center>
+            <a href="" data-toggle="modal" data-target="#cancel">Cancel My Subscription!</a>
+            
+            <div class="wiggle"><a href="/"><button value="Home" style="border-color: transparent; background-color: #1acc8d;color: white; font-size: 25px; margin-top: 3%; padding-right: 1.5%;padding-left: 1.5%;padding-top: 0.5%;padding-bottom: 0.5%;border-radius: 5px">Home</button></a></div>
+          
+        </form></center>
+
+      </div>
+    </section>
+
+      {% else %}
+   <div class="container mt-0" style="margin-bottom: 200px">
+    <br>
+   <center>
+    <img src="{% static 'assets/img/something-wrong.png'%}">
+    <br>
+    <br>
+    <h3>Something went wrong!</h3>
+    <hr>
+    <p>Please be aware that you cannot use your special offer twice. Please select other options or try again later if this message occurred after selecting monthly or yearly plans.</p>
+    <br>
+    <p>You can always contact us by going to <a href="/customer_service">customer service</a> or emailing us on <span style="color: black"><b>support@just-ask.in</b></span></p>
+   </center>
+ </div>
+   {% endif %}
+
+
+   <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Your Name!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      <h4>Are you sure you want to cancel the current subscription plan?</h4>
+      <h6>This step cannot be reverted so decide carefully. There will be no refund given if you cancel the current plan.</h6>
+        
+
+      </div>
+       <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a href="/cancel"><button class="btn" style="background-color: #1acc8d; color: white">Go Ahead!</button></a>
+          </div> 
+      
+    </div>
+  </div>
+</div>
+
+
+    <style type="text/css">
+
+
+      
+
+      /*SHAKER*/
+@keyframes wiggle {
+  2% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  4% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  6% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  8% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  10% {
+    -webkit-transform: translateX(2px) rotate(1deg);
+    transform: translateX(2px) rotate(1deg);
+  }
+  12% {
+    -webkit-transform: translateX(-2px) rotate(-1deg);
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  14% {
+    -webkit-transform: translateX(2px) rotate(1deg);
+    transform: translateX(2px) rotate(1deg);
+  }
+  16% {
+    -webkit-transform: translateX(-2px) rotate(-1deg);
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  18% {
+    -webkit-transform: translateX(1px) rotate(0);
+    transform: translateX(1px) rotate(0);
+  }
+  20% {
+    -webkit-transform: translateX(-1px) rotate(0);
+    transform: translateX(-1px) rotate(0);
+  }
+}
+
+div.wiggle {
+  animation: wiggle 2.7s infinite;
+}
+
+div.wiggle:hover {
+  animation: none;
+}
+/*END SHAKER*/
+    </style>
+
+
+  </main><!-- End #main -->
+{% endblock %}

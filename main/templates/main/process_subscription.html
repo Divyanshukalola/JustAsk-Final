@@ -1,0 +1,25 @@
+{% extends "main/header.html" %}
+{% block title %}Pay using PayPal{% endblock %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+    <br><br>
+
+    <section class="inner-page mt-0">
+      <div class="container mt-0" style="margin-bottom: 200px">
+
+        <h1>User Profile!</h1>
+        <hr>
+        {{ form.render }}
+      
+
+      </div>
+    </section>
+
+
+  </main><!-- End #main -->
+{% endblock %}

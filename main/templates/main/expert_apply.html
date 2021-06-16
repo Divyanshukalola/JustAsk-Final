@@ -1,0 +1,75 @@
+  {% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+
+  <main>
+    <!-- ======= Breadcrumbs Section ======= -->
+    <br><br><br>
+
+    <section class="inner-page mt-0">
+      <div class="container mt-0">
+
+        <h1>Apply For An Expert!</h1>
+        <hr>
+        <p>Please fill out the given form and answer a quiz to become an expert.</p>
+
+        <form method="post" action="/quiz/">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Select the Primary Field of Expertise</label>
+            <select class="form-control" id="field" name="field">
+              <option>physics</option>
+              <option>chemistry</option>
+              <option>math</option>
+              <option>economics/commerce</option>
+              <option>computer science</option>
+            </select>
+          </div>
+           <div class="form-group">
+            <label for="exampleInputEmail1">Select the Secondary Field of Expertise (If Any)</label>
+            <select class="form-control" id="field2" name="field2">
+              <option>---</option>
+              <option>physics</option>
+              <option>chemistry</option>
+              <option>math</option>
+              <option>economics/commerce</option>
+              <option>computer science</option>
+            </select>
+          </div>
+
+          <p><b>Note: </b>These sections helps us determine your field of expertise. You will be asked to complete a small quiz once you submit this form.</p>
+          <hr>
+          <p><b>Please read the given instruction very carefully. Once you click submit your quiz will start.</b></p>
+          <ol>
+            <li>Your Quiz is not timed, so don't be in a hurry to complete the quiz. Take your time to choose the correct answer.</li>
+            <li>By changing the tab Just Ask will think that you have concluded the quiz and submit it automatically. <b>Do not</b> change the tab.</li>
+            <li><b>Do not</b> go back or close the tab before submitting the quiz.</li>
+            <li>You only have <b>one</b> attempt towards solving this quiz.</li>
+
+          </ol>
+          <center><p style="font-size: 25px; font-weight: 300"><b>Best of Luck !!</b></p></center>
+          <hr>
+
+
+
+          <button type="submit" class="btn" style="background-color: #1acc8d; color: white">Submit</button>
+
+      </form>
+
+       </div>
+     </section>
+     <br><br><br><br><br><br>
+
+
+
+  </main><!-- End #main -->
+{% endblock %}

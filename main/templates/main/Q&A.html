@@ -1,0 +1,138 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main id="QNA">
+    <section id="hero">
+
+
+    <div class="container pt-5" style="height: 700px">
+      {% if messages%}
+    
+      <div data-aos="fade-right" data-aos-anchor="#example-anchor"
+     data-aos-offset="500"
+     data-aos-duration="500" class="alert alert-warning alert-dismissible fade show " style="position: absolute;z-index: 1;width: auto; height: auto; top: auto;border-color: transparent; background-color: #D6EAF8" role="alert">
+        <strong style="color: black;">Alert! </strong> 
+        {% for m in messages %}
+        <br><span style="color: grey">{{m}}</span>
+        {% endfor%}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" style="color: black">&times;</span>
+        </button>
+      </div>
+    
+  {% endif%}
+      
+          <div data-aos="zoom-out">
+
+            <form action="/search_request" method="get">
+               <p style="text-align: center; font-style: normal; color: white; font-size: 50px">Just Ask a Question!  </p>
+               <br>
+               <br>
+
+
+            <div class="box">
+  <div class="content">
+                 <div class="row "> 
+        
+                  <div class="col-11 col-sm-11 col-md-8 col-lg-9 ml-4">
+                    <div class="input-group input-group-lg">
+                    <input type="text" class="form-control mt-4" name="search" id='search' aria-label="Large" placeholder="Find Solutions to your Problems" aria-describedby="inputGroup-sizing-sm" style="border-left-color: #1acc8d; border-left-width: 6px">
+                    </div>
+                  </div>
+
+
+
+
+                  <div class="col-12 col-sm-12 col-md-3 col-lg-2 mb-4">
+                  <div class="text-center text-lg-left">
+                    
+                      {% csrf_token %}
+                      <input class="btn btn-get-started mt-4" type="submit" value="Search" style="border-radius: 5px;">
+                  </div>
+                  </div>
+           
+
+
+            </div>
+            </div>
+          </div>
+         
+
+          
+        </form>
+            
+          
+            <br>
+            <center><a href="/question_p" style="font-size: 20px; color: white"><p>Post Your Question!</p></a></center>
+            
+            
+            
+         
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+  <style type="text/css">
+    
+.box
+{
+  width: auto;
+
+  margin: auto;
+  padding: 3px;
+  background-color: #eaab00; /* gold */
+  border-radius: 10px;
+  /* Single pixel data uri image http://jsfiddle.net/LPxrT/ 
+  /* background-image: gold, gold, white */
+  background-image: url('data:image/gif;base64,R0lGODlhAQABAPAAAOqrAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),  url('data:image/gif;base64,R0lGODlhAQABAPAAAOqrAP///yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='),
+url('data:image/gif;base64,R0lGODlhAQABAPAAAP///////yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==');
+  background-repeat: no-repeat;
+  background-size: 0 2px, 0 100%, 0% 2px;
+  background-position: top center, top center, bottom center;
+  -webkit-animation: drawBorderFromCenter 4s;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes drawBorderFromCenter {
+    0% {
+      background-size: 0 2px, 0 0, 100% 100%;
+    }
+    20% {
+      background-size: 100% 2px, 100% 0, 100% 100%;
+    }
+    66%
+    {
+      background-size: 100% 2px, 100% 98%, 100% 100%;
+    }
+    99%
+    {
+      background-size: 100% 2px, 100% 98%, 0 2px;
+    }
+}
+
+
+
+.content
+{
+  background: rgba(2, 5, 161, 0.99);
+  padding: 1em;
+  text-align: center;
+  text-transform: uppercase;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+}
+  </style>
+
+
+
+  
+
+
+  </main><!-- End #main -->
+{% endblock %}

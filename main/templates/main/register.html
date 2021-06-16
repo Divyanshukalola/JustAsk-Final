@@ -1,0 +1,157 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+<section id="signup" class="breadcrumbs mt-0 mb-5">
+</section>
+<section id="breadcrumbs" class="breadcrumbs mt-0">
+
+	{% if messages%}
+      <div id="success-alert" style="width: 600px">
+      	{% for m in messages %}
+      	
+      	
+      	<div  class="alert alert-warning alert-dismissible fade show " style="position: relative;z-index: 1;width: auto; height: auto; top: auto;border-color: transparent; background-color: rgba(5, 3, 100, 1)" >
+        <strong style="color: white;">Message From Just Ask! </strong> 
+        
+
+        <br><span style="color: lightgrey">{{m}}</span> 
+       
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" style="color: lightgrey">&times;</span>
+        </button>
+      </div>
+      
+   
+     {% endfor%}
+    </div>
+      
+  {% endif%}
+
+	
+	 <style type="text/css">
+    #breadcrumbs{
+      background-color: #ffffff;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='%230f40c6' fill-opacity='0.06'%3E%3Cpolygon fill-rule='evenodd' points='8 4 12 6 8 8 6 12 4 8 0 6 4 4 6 0 8 4'/%3E%3C/g%3E%3C/svg%3E");
+    }
+  </style>
+	<div class="container mb-5 mt-5" >
+
+
+    	<div class="row mt-0">
+
+
+    		<div class="col-12 col-md-12 col-lg-6 col-sm-12 mt-2" style="background: rgba(1, 4, 136, 0.9); height: auto; margin-top: 200px ;border-radius: 0px 0px 0px 0px">
+    			<br><br><br>
+    			<header class="section-header ml-5 mr-5 mb-5">
+		          <h3 style="color: white; margin-top: 110px">Just Ask and we will help you solve your doubts!</h3>
+		        </header>
+		        <p class="mt-3 ml-5 mr-5" style="color: white;">Good grades is your goal and to help achieve those grades is our goal. Join now for free and Subsribe now. <a href="/rates">Learn more</a> <p class="mt-3 ml-5 mr-5" style="color: white">
+By signing up, you agree to our <a href="/terms" style="color: lightgrey"><em><abbr title="Terms and Condition">Terms of use and Privacy Policy.</abbr></em> </a></p>
+<br><br><br><br><br>
+    		
+    		</div>
+
+    		<div class="col-12 col-md-12 col-lg-6 col-sm-12 mt-2" style="background: white; height: auto; margin-top: 200px; border-radius: 0px 0px 0px 0px; border-color: rgba(1, 4, 136, 0.9);border-style:solid; border-width:thin;">
+
+    			<form method="POST" class="mr-4 ml-4">
+					<header class="section-header mt-5 mb-5">
+			          <h3>Register</h3>
+			         
+			          <hr>
+			        </header>
+					{% csrf_token %}
+
+					<div class="form-row">
+					    <div class="form-group col-md-6 col-sm-6">
+					      <label>Username:</label>
+					      <input type="text" class="form-control" id="id_username" placeholder="User Name" name ="username">
+					    </div>
+					    <div class="form-group col-md-6 col-sm-6">
+					      <label for="inputEmail4">Email:</label>
+					      <input type="email" class="form-control" id="id_email" placeholder="Email" name="email">
+					    </div>
+					  </div>
+					  <p>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. No blank Spaces allowed in username.</p>
+					 
+					 
+					 <div class="form-row">
+					    <div class="form-group col-md-6 col-sm-6">
+					      <label for="inputEmail4">Password:</label>
+					      <input type="password" class="form-control" id="id_password1" placeholder="Password" name="password1" autocomplete="new-password">
+					      <span toggle="#id_password1" class="fa fa-fw fa-eye field-icon toggle-password mr-1" style="float: right;margin-left: -25px; margin-top: -25px;position: relative; z-index: 2; color: lightgrey"></span>
+
+					    </div>
+					    <div class="form-group col-md-6 col-sm-6">
+					      <label>Confirm Password:</label>
+					      <input type="password" class="form-control" id="id_password2" placeholder="Confirm Password" name="password2" autocomplete="new-password">
+					    </div>
+
+					    <div class="faq-list">
+					    
+				              <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-2" class="collapsed">Help</a>
+				              <div id="faq-list-2" class="collapse" data-parent=".faq-list">
+				              	<p>You Password should contain the following:</p>
+				               <ul>
+								  <li>Your password can’t be too similar to your other personal information.</li>
+								  <li>Your password must contain at least 8 characters.</li>
+								  <li>Your password can’t be a commonly used password.</li>
+								  <li>Your password can’t be entirely numeric.</li>
+								</ul>
+				              </div>
+				          
+					    </div>
+					    
+
+					  </div>
+					  <p></p>
+					  <p align="center"><small class="muted">Your information will not be shared with anyone. For customer support please visit our <a href="/customer_service"> help page</a>.</small></p>
+				
+					<div align="center">
+						<button class="btn" style="background-color: #1acc8d; color: white; border-radius: 30px; padding-right: 25px; padding-left: 25px; padding-top: 10px; padding-bottom: 10px;" type="submit" >Register</button>
+					</div>
+
+					<br>
+				<p style="text-align: center">If you have already Signed up, <a href="/login">Login</a> instread.</p>
+				
+				<br>
+				<br>
+
+					
+
+				</form>
+				
+
+    		</div>
+    	</div>
+    </div>
+	</section>
+
+
+
+	<script type="text/javascript">
+		
+		$(".toggle-password").click(function() {
+
+		  $(this).toggleClass("fa-eye fa-eye-slash");
+
+		  
+		   var x = document.getElementById("id_password1");
+			  if (x.type === "password") {
+			    x.type = "text";
+			  } else {
+			    x.type = "password";
+			  }
+		});
+	</script>
+
+ 
+
+
+
+
+
+  
+
+
+	
+{% endblock %}

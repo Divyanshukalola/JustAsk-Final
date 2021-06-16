@@ -1,0 +1,129 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section id="books" class="breadcrumbs bg-white">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+           <form action="/booksearch_request" method="get">
+            <div class="row"> 
+            <div class="col-sm-7">
+              <div class="input-group input-group-lg">
+              <input type="text" class="form-control mt-4" name="search" id='search' aria-label="Large" placeholder="Find Solutions" aria-describedby="inputGroup-sizing-sm" value="{{question}}" style="border-color: #1acc8d; border-width: 3px;width: 900px; border-radius: 5px">
+           
+              </div>
+            </div>
+
+            <div class="col-sm">
+            <div class="text-center text-lg-left">
+              
+                {% csrf_token %}
+                <input class="btn btn-get-started mt-4" type="submit" value="Search" style="border-radius: 5px;">
+            </div>
+            </div>
+
+           
+          
+            </div>
+             </form>
+
+         
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+
+    <section class="inner-page" style="height: auto">
+      <div class="container">
+        <h2>You Search for - {{question}}</h2>
+      
+        <hr>
+      <h3 style="font-style: normal; color: grey">Books</h3>
+      <br>
+      <div class="row mb-5 justify-content-center" style="height: auto">
+        <div class="card-deck">
+      {% for b in qs %}
+      <div class="col-sm-6 col-lg-4 mt-4" style="height: auto; width: 80rem">
+          {% if b.price != 0 %}
+         <img src="{% static 'assets/img/marker2.png'%}" style="position: absolute;z-index: 2; width: 110px; left: 68.8%; top:4px">
+         {%else%}
+         <img src="{% static 'assets/img/marker.png'%}" style="position: absolute;z-index: 2; width: 110px; left: 68.8%; top:4px">
+         {%endif%}
+             <div class="card mt-1 shadow p-3 mb-5 bg-white rounded" >
+                <img class="card-img-top" src="{{b.Bcover.url}}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{b.File_name|highlight:question|safe}}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Author: {{b.Auth|highlight:question|safe}}</h6>
+                  <h6 class="card-subtitle mb-2 text-muted">ISBN: {{b.BID|highlight:question|safe}}</h6>
+                  
+
+                  {% if b.price != 0 %}
+                  <form action="/bookbuy_request" method="get">
+            <input type="text" class="form-control" name="bid" id='bid'  value="{{b.BID}}" hidden="True">
+          <input type="submit" value="Buy Book" style="border-color: transparent; background-color: transparent;color: #1acc8d">
+        </form>
+                  {%else%}
+                  <form action="/bookbuy_request" method="get">
+            <input type="text" class="form-control" name="bid" id='bid'  value="{{b.BID}}" hidden="True">
+          <input type="submit" value="Open Book" style="border-color: transparent; background-color: transparent;color: #8A2BE2">
+        </form>
+                  {%endif%}
+                </div>
+              </div>
+              </div>
+        
+      {% endfor %}
+    </div>
+    </div>
+
+
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {% if qs.has_previous == True %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ qs.previous_page_number }}&search={{question}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    {% else %}
+    {% endif %}
+
+    {% for num in qs.paginator.page_range %}
+      {% if qs.number == num %}
+      <li class="page-item active"><a class="page-link" href="?page={{ num }}&search={{question}}">{{num}}</a></li>
+      {% elif num > qs.number|add:'-3' and num < qs.number|add:'3' %}
+      <li class="page-item"><a class="page-link" href="?page={{ num }}&search={{question}}">{{num}}</a></li>
+      {% endif %}
+    {% endfor %}
+    
+  
+    {% if qs.has_next == True %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ qs.next_page_number }}&search={{question}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+    {% else %}
+    {% endif %}
+  </ul>
+</nav>
+
+      
+
+      </div>
+    </section>
+
+
+  </main><!-- End #main -->
+{% endblock %}

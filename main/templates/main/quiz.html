@@ -1,0 +1,137 @@
+  {% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+
+  <main>
+    <!-- ======= Breadcrumbs Section ======= -->
+    <br><br><br>
+
+    <section class="inner-page mt-0">
+      <div class="container mt-0">
+
+        <h1>Quiz Time!</h1>
+        <hr>
+        <p>Please finish this quiz do not reload or close the window. Your work won't be saved.</p>
+
+        <form method="post" id='form' action="/QuizCheck/">
+          {% csrf_token %}
+
+          <input type="text" name="field" id='field' value="{{field1}}" hidden="True">
+          <input type="text" name="field2" id='field2' value="{{field3}}" hidden="True">
+
+          {% for q in questions %}
+              <div class="form-group">
+                <h5><b>{{q.question|safe}}</b></h5>
+                <br>
+                
+                {% if q.question_cover != ''%}
+                  <img src="{{q.question_cover.url}}" width="600">
+                  <br>
+                  <br>
+                {% else %}
+
+                {% endif %}
+
+
+
+
+
+                {% if q.style == False %}
+
+               
+                  {% for c in choice %}
+                    {% if c.question.question == q.question %}
+                     <div class="form-check">
+                          <input class="form-check-input" type="radio" id="{{q.id}}" name='{{q.id}}' value="{{c.id}}">
+
+                          <label class="form-check-label" for="inlineRadio1">{{c}}</label><br>
+                          {% if c.answer_cover != '' %}
+                            <img src="{{c.answer_cover.url}}" height="50"><br>
+                          {% else %}
+                          {% endif %}
+                          
+                
+                      </div>
+                       <hr>
+                        
+                       
+                    {% else %}
+                    {% endif %}
+
+                  {% endfor %}
+                 
+             
+                 {% else %}
+
+                 <select class="form-control" id="{{q.id}}" name='{{q.id}}'>
+                  <option>---</option>
+                 
+                  {% for c in choice %}
+                    {% if c.question.question == q.question %}
+                        <option>{{c}}</option>
+                  
+                    {% else %}
+                    {% endif %}
+                  {% endfor %}
+                 
+                  
+                </select>
+               
+                {% endif %}
+
+                
+              </div>
+          {% endfor %}
+
+
+          
+
+          
+
+
+
+
+
+
+
+
+          <button type="submit" class="btn" style="background-color: #1acc8d; color: white">Submit</button>
+
+
+      </form>
+
+       </div>
+     </section>
+
+
+
+     <script type="text/javascript">
+       var focused = true;
+
+        window.onfocus = function() {
+            document.getElementById("p1").innerHTML = "Focuse once";
+        };
+        window.onblur = function() {
+          document.getElementById("form").submit();
+          /*window.location.href = '/expert_apply';*/
+        };
+
+
+
+      /*  jQuery(document).on('mouseleave', leaveFromTop);
+        function leaveFromTop(e){
+          if( e.clientY < 0 ) 
+            alert('Please be sure you submit the quiz before you go! Do not attempt to change the tab or else quiz will be submitted automatically.');
+
+        }*/
+     </script>
+     
+
+
+
+  </main><!-- End #main -->
+{% endblock %}

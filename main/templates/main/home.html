@@ -1,0 +1,315 @@
+
+
+{% extends "main/header.html" %}
+{% block content %}
+{% load tracking_tags %}
+
+{% load static %}
+{% load humanize %}
+
+
+
+  
+   <!-- ======= Hero Section ======= -->
+  <section id="hero">
+
+    <div class="container pt-2" style="height: auto" data-aos="fade-right" data-aos-delay="100">
+      {% if messages%}
+      <div id="success-alert">
+      	{% for m in messages %}
+      	
+      	
+      	<div  class="alert alert-warning alert-dismissible fade show " style="position: relative;z-index: 1;width: auto; height: auto; top: auto;border-color: transparent; background-color: rgba(5, 3, 100, 1)" >
+        <strong style="color: white;">Message From Just Ask! </strong> 
+        
+
+        <br><span style="color: lightgrey">{{m}}</span> 
+       
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true" style="color: lightgrey">&times;</span>
+        </button>
+      </div>
+      
+   
+     {% endfor%}
+    </div>
+      
+  {% endif%}
+
+      <div class="row pt-5" id="home">
+        <div class="col-lg-7 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
+          <div data-aos="zoom-out">
+
+
+            
+
+
+        <div class="text-center">
+           <form action="/search_request" method="get" autocomplete="off">
+            <div class="row"> 
+            <div class="col-sm-12 col-md-10 col-lg-11">
+              <div class="input-group input-group-lg">
+
+                <div class="mr-md-5">
+                  
+                </div>
+              <input type="text" class="form-control mt-4 ml-md-5" name="search" id='search' aria-label="Large" placeholder="Just Ask Here ..." aria-describedby="inputGroup-sizing-sm" style="border-left-color: #1acc8d; border-left-width: 6px; width: 305px; border-radius: 5px" data-container="body" data-toggle="popoverm" data-placement="buttom"  data-content="Enter your questions here!" autocomplete="off">
+              </div>
+            </div>
+
+
+
+
+            <div class="col-sm">
+            <div class="text-center text-lg-left">
+              
+                {% csrf_token %}
+                <input class="btn btn-get-started mt-4" type="submit" value="Search" style="border-radius: 5px;">
+            </div>
+            </div>
+           
+
+
+            </div>
+             </form>
+        </div>
+
+            
+          
+            <br>
+            <h2 class="ml-4" style="text-align: center;margin-bottom: 0px">Just Ask what you want help for!</h2>
+          <!--   <p class="ml-4" style="text-align: center; color: lightgrey">You can also enter your referal code here!</p> -->
+            
+          </div>
+        </div>
+        <div class="col-lg-5 ml-0 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="300">
+          <img src="{% static 'assets/img/cover.svg'%}" class="img-fluid animated ml-5" alt="" width="300">
+        </div>
+      </div>
+    </div>
+    <br><br><br>
+
+    <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
+      <defs>
+        <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z">
+      </defs>
+      <g class="wave1">
+        <use xlink:href="#wave-path" x="50" y="3" fill="rgba(255,255,255, .1)">
+      </g>
+      <g class="wave2">
+        <use xlink:href="#wave-path" x="50" y="0" fill="rgba(255,255,255, .3)">
+      </g>
+      <g class="wave3">
+        <use xlink:href="#wave-path" x="50" y="9" fill="#fff">
+      </g>
+    </svg>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    
+
+
+    <!-- ======= About Section ======= -->
+    <section class="about">
+      <div class="container-fluid ">
+
+        <div class="row">
+          <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch" data-aos="fade-right">
+            <a href="https://youtu.be/xjH-5wvQm7E" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
+          </div>
+
+          <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5" data-aos="fade-left">
+            <h3>Work Smart, Score More!</h3>
+            <p>Just Ask provides you with the best educational resources through hand-picked E-notes for a step-by-step solution to your doubts. </p>
+
+            <div class="icon-box" data-aos="zoom-in" data-aos-delay="100">
+              <div class="icon"><i class="icofont-listine-dots"></i></div>
+              <h4 class="title"><a href="">Detailed solution to your problems!</a></h4>
+              <p class="description">Our solutions are carefully examined for their steps and processes to give you the best explanation to your questions.</p>
+            </div>
+
+            <div class="icon-box" data-aos="zoom-in" data-aos-delay="200">
+              <div class="icon"><i class="icofont-library"></i></div>
+              <h4 class="title"><a href="">E-Notes and E-Books</a></h4>
+              <p class="description">Prepare for your exam by using Just Ask's handpicked E-notes written and examined by experts themselves for a better understanding. Our Low-cost book rental services give you access to study material with a low cost.</p>	
+            </div>
+
+            <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
+              <div class="icon"><i class="icofont-tick-mark"></i></div>
+              <h4 class="title"><a href="">Check your Grammar!</a></h4>
+              <p class="description">Submit the final drafts of your written work with zero grammatical errors. Use our free service which checks your grammar and suggests changes. Be confident in your grammar.</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+    <hr>
+
+    <!-- ======= Counts Section ======= -->
+    <section id="counts" class="counts bg-white">
+      <div class="container">
+
+        <div class="row" data-aos="fade-up">
+
+          <div class="col-lg-4 col-md-6">
+            <div class="count-box">
+              <i class="icofont-badge"></i>
+              <span>5,000+</span>
+              <p>Doubts Solved</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 mt-5 mt-md-0">
+            <div class="count-box">
+              <i class="icofont-document-folder"></i>
+             
+              <span data-toggle="counter-up">{%widthratio notes 1 15%}</span>
+           
+              <p>E-Notes Contributed</p>
+            </div>
+          </div>
+
+        <!--   <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
+            <div class="count-box">
+              <i class="icofont-book"></i>
+              <span data-toggle="counter-up">{{books}}</span>
+              <p>EBooks Available</p>
+            </div>
+          </div> -->
+
+          <div class="col-lg-4 col-md-6 mt-5 mt-lg-0">
+            <div class="count-box">
+              <i class="icofont-tasks"></i>
+              <span>6500+</span>
+              <p>Texts Analysed</p>
+              <!-- <span data-toggle="counter-up">{{questions|intcomma|intword}}</span>
+              <p>Questions Answered</p> -->
+            </div>
+          </div>
+
+        </div>
+
+       
+      </div>
+    </section><!-- End Counts Section -->
+    <hr>
+
+
+    <!-- ======= Details Section ======= -->
+    <section id="details" class="details">
+      <div class="container">
+
+        <div class="row content">
+          <div class="col-md-4" data-aos="fade-right">
+            <img src="{% static 'assets/img/review.jpg'%}" class="img-fluid mb-5" alt="">
+          </div>
+          <div class="col-md-8 pt-4" data-aos="fade-up">
+            <h3>Reviewed by Professionals!</h3>
+            <p class="font-italic">
+              Each and every piece of material posted on Just Ask is throughly reviewed by professionals from the particular field.
+            </p>
+            <ul>
+              <li><i class="icofont-check"></i> No Fake Solutions or Misleading Answers</li>
+              <li><i class="icofont-check"></i> Answers are voted for and checked before presenting them to you</li>
+              <li><i class="icofont-check"></i> E-notes created by students themselves and verified by professionals</li>
+              
+            </ul>
+            <p>
+             
+            </p>
+          </div>
+        </div>
+        <hr>
+          <br><br>
+
+        <div class="row content">
+
+          <div class="col-md-3 order-1 order-md-2" data-aos="fade-left">
+            <img src="{% static 'assets/img/notes.png'%}" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-8 pt-5 order-2 order-md-1" data-aos="fade-up">
+            <h3>Write your exams with confidence!</h3>
+            <p class="font-italic">
+              Subscribe now and get unlimited access to the e-notes and e-books. Ease your way through your exam preparations without having to worry about finding the right material.
+            </p>
+            <p>
+              We assure you that material posted on Just Ask is reliable and correct in its theory.
+            </p>
+            <p>
+              Our E-Notes have been specially hand-picked to deliver the best experience while studying for your exams. Make your exam preparations less stressful and let Just Ask do the resource-hunting for you.
+            </p>
+          </div>
+        </div>
+        <br><br>
+        <hr>
+        <div style="border: 3px #1acc8d;  border-style:dashed; " data-aos="fade-right">
+        	<br><br>
+        	
+     
+        <div class="row content justify-content-center mb-0">
+        	 <div class="col-md-6">
+          	<img src="{% static 'assets/img/study.jpg'%}" class="img-fluid mb-5" alt="">
+           
+          </div>
+          <div class=" col-10 col-md-4 pt-4 ml-5"  >
+            <h3>Just Ask<span style="color: #1acc8d; font-family: 'Exo', sans-serif ;font-style: oblique;"> Study</span></h3>
+            <p class="font-italic" style="font-size: 19px">
+              Get Step-by-Step Solutions to your problems
+            </p>
+            <p>
+            	Work smart by using step-by-step solutions to questions that have been asked through our searchable digital database of homework solutions, E-notes and E-Books. <i>Subscribe now and get a one month trial for free. Offer available for limited time only!</i>
+            </p>
+            <p>
+            	<div id="ripple"><a href="/rates"><button id="subutton" type="button" class="btn p-2 mr-3 ml-3" style="color: #000480 ; background-color: #1acc8d; width: 240px">SUBSCRIBE NOW</button></a></div>
+             
+            </p>
+          </div>
+         
+        </div>
+
+          <div class="row content justify-content-center mt-0">
+          	<div class="col-md-1 mr-2">
+        		
+        	</div>
+        	<div class="col-10 col-md-4 ml-5 mt-5 pt-4">
+           <h3>Just Ask<span style="color: #1acc8d; font-family: 'Exo', sans-serif ;font-style: oblique;"> Grammar</span></h3>
+            <p class="font-italic" style="font-size: 19px">
+              Write with confidence
+            </p>
+            <p>
+            	Correct your written work before submitting. We help you with spell check and grammatical errors. Definitions help you learn and understand you mistakes. 
+            </p>
+            <p>
+            	<a href="/writing"><button type="button" class="btn p-2 mr-3 ml-3" style="color: #000480 ; background-color: #1acc8d; border-color: transparent; width: 240px">TRY JUST ASK GRAMMAR</button></a>
+             
+            </p>
+          </div>
+          <div class="col-md-6">
+            <img src="{% static 'assets/img/write2.jpg'%}" class="img-fluid mb-5" alt="" width="600">
+          </div>
+          
+        </div>
+
+           </div>
+
+
+         
+
+
+
+        
+
+      </div>
+
+
+     
+    </section><!-- End Details Section -->
+    
+  </main>
+
+
+{% endblock %}

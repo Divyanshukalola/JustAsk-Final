@@ -1,0 +1,145 @@
+{% extends "main/header.html" %}
+{% block content %}
+{% load static %}
+{% load poll_extras %}
+
+
+
+  <main>
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section id="study" class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+           <form action="/qsearch_request" method="get">
+            <div class="row"> 
+            <div class="col-sm-7">
+              <div class="input-group input-group-lg">
+              <input type="text" class="form-control mt-4" name="search" id='search' aria-label="Large" placeholder="Find Questions" aria-describedby="inputGroup-sizing-sm" value="{{question}}" style="border-color: #1acc8d; border-width: 3px;width: 900px; border-radius: 5px">
+           
+              </div>
+            </div>
+
+            <div class="col-sm">
+            <div class="text-center text-lg-left">
+              
+                {% csrf_token %}
+                <input class="btn btn-get-started mt-4" type="submit" value="Search" style="border-radius: 5px;">
+            </div>
+            </div>
+
+           
+          
+            </div>
+             </form>
+
+         
+        </div>
+
+      </div>
+    </section><!-- End Breadcrumbs Section -->
+    <section class="inner-page">
+      <div class="container">
+        <h2>Unanswered Question</h2>
+      <br>
+
+      {% for q in questions %}
+      <div class="container shadow p-3 mb-5 bg-white rounded">  
+        <div class="row ml-4 mt-3">
+
+        <div class="col-sm-0 col-0 mt-3 ">
+          <p><strong>Q:</strong></p>
+        </div>
+         <div class="col-sm-auto col-9 col-lg-11 mt-3 " style="width: auto">
+          {% with ques=q.question|striptags %}
+          {% with qu=question|striptags %}
+          <p><strong>{{ques|highlight:qu|safe}}</strong></p>
+          {% endwith %}
+          {% endwith %}
+          
+        </div>
+      </div>
+     
+      <div class="row mt-0 mb-5 ml-3 ">
+      	 {% if q.answer != '' %}
+        <div class="col-sm-0 col-0 ml-2">
+          <p><strong>A:</strong></p>
+        </div>
+        <div class="col-sm-auto col-lg-auto col-10">
+          <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> Answered</p>
+          <form action="/answer_request" method="get">
+            <input type="text" class="form-control" name="question" id='question'  value="{{q.question|striptags}}" hidden="True">
+            <input type="text" class="form-control" name="question" id='question'  value="{{q.qid}}" hidden="True">
+          <input type="submit" value="See Full Solution" style="border-color: transparent; background-color: transparent;color: #1acc8d">
+        </form>
+        </div>
+        {% else %}
+        <div class="col-sm-0 col-0 ml-2">
+          <p><strong>A:</strong></p>
+        </div>
+
+         <div class="col-sm-auto col-lg-auto col-10">
+          <p style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"> Not Answered</p>
+          <form action="/answer_request" method="get">
+            <input type="text" class="form-control" name="question" id='question'  value="{{q.question|striptags}}" hidden="True">
+            <input type="text" class="form-control" name="question" id='question'  value="{{q.qid}}" hidden="True">
+          <input type="submit" value="Open Question" style="border-color: transparent; background-color: transparent;color: #1acc8d">
+        </form>
+        </div>
+
+        {% endif %}
+         
+      </div>
+      
+
+      </div>
+        
+      {% endfor %}
+
+
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {% if questions.has_previous == True %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ qs.previous_page_number }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    {% else %}
+    {% endif %}
+
+    {% for num in questions.paginator.page_range %}
+      {% if questions.number == num %}
+      <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{num}}</a></li>
+      {% elif num > questions.number|add:'-3' and num < questions.number|add:'3' %}
+      <li class="page-item"><a class="page-link" href="?page={{ num }}">{{num}}</a></li>
+      {% endif %}
+    {% endfor %}
+    
+  
+    {% if questions.has_next == True %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ qs.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+    {% else %}
+    {% endif %}
+  </ul>
+</nav>
+<hr>
+
+
+      
+
+      </div>
+    </section>
+
+
+  </main><!-- End #main -->
+{% endblock %}
